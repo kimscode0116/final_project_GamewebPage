@@ -63,7 +63,8 @@
 					<button class="fun-btn">GAME START</button>
 				</div> -->
 				<div class="adminMain">
-				<a><h1>현재 관리자 계정으로 로그인 중 </br> ${m1}님의 로그인을 환영합니다.</h1></a>
+				<a><h1>현재 관리자 계정으로 로그인 중 </br> 
+				${m1}님의 로그인을 환영합니다.</h1></a>
 				</div>
 			</div>
 		</div>

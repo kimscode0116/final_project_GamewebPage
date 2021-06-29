@@ -61,7 +61,7 @@
 		<div class="main1">
 			<div class="messageWrap">
 				<div class="massage">
-					<a><h1>${m1}님의 로그인을 환영합니다.</h1></a>
+					<a><h1>${m1}</h1></a>
 				</div>
 				<div class="goGame">
 					<a href="/oaiaGameLab/" class="goGameBtn">Game Page</a>

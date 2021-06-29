@@ -9,19 +9,17 @@
 <meta name="viewport" content="width-device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" media="screen"
 	href="./resources/main.css">
-<link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/message.css">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
 	rel="stylesheet">
-<link
+<!-- <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
+	rel="stylesheet" id="bootstrap-css"> -->
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/signup.css">
+ <link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/signup.css"> 
 
 
 

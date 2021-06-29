@@ -173,17 +173,6 @@ main {
 	height: 100px;
 }
 
-.main1 {
-	width: 100%;
-	height: 1000PX;
-	background: url("https://i.gifer.com/Cat.gif");
-	background-repeat: no-repeat;
-	background-size: cover;
-/* 	display: block;
-	margin-left: auto;
-	margin-right: auto; */
-}
-
 .main1 .main1wrap {
 	width: 100%;
 	display: block;

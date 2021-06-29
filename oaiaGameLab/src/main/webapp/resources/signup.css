@@ -21,3 +21,16 @@ h2 {
 .left { float: left; }
 
 .right { float: right; }
+
+
+.main1 {
+	width: 100%;
+	height: 1000PX;
+/* 	background: url("https://i.gifer.com/Cat.gif");
+	background-repeat: no-repeat;
+	background-size: cover; */
+/* 	display: block;
+	margin-left: auto;
+	margin-right: auto; */
+	background:white;
+}

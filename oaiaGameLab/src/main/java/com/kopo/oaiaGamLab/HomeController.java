@@ -22,7 +22,8 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(HttpServletRequest request, Locale locale, Model model) {
 		HttpSession session = request.getSession();
-		String is_login = (String) session.getAttribute("is_login");
+		
+		Boolean is_login = (Boolean)session.getAttribute("is_login");
 		String login_id = (String) session.getAttribute("login_id");
 
 		if (is_login == null) {
@@ -32,14 +33,13 @@ public class HomeController {
 			model.addAttribute("m1", login_id);
 			System.out.println("2222여기걸리나");
 			return "adminMain";
-		}
-		System.out.println("2332여기걸리나");
+		} else
+			System.out.println("123여기 걸리나");
 		return "main";
 	}
 
 	@RequestMapping(value = "/createDB", method = RequestMethod.GET)
 	public String createTable(Locale locale, Model model) {
-
 		GameDB db = new GameDB();
 		boolean isSuccess = db.createDB();
 		if (isSuccess) {
@@ -159,6 +159,8 @@ public class HomeController {
 		if (isSuccess) {
 			HttpSession session = request.getSession();
 			session.setAttribute("is_login", true);
+			session.setAttribute("login_id", user_id);
+
 			return "redirect:/";
 		}
 		return "redirect:/login";
