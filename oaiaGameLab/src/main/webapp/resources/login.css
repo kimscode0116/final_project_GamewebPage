@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Sunflower:wght@300&display=swap');
+/* 폰트 사용시 여기서 복사
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Sunflower', sans-serif;
+ */
+ 
+.loginWrap {
+	width: 70%;
+		min-height: 900px;
+		padding: 100px 200px 100px 200px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.loginForm {
+/*   position:absolute; */
+  width:500px;
+  height:700px;
+  padding: 30px 20px 30px 20px;
+  background-color:#FFFFFF;
+  text-align:center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+  border-radius: 15px;
+}
+
+.titleArea img {
+	  margin: 20px auto auto auto;
+	width: 50%;
+}
+
+.loginForm h1{
+  font-size:40px;
+  text-align: center;
+  margin: 10px auto auto auto;
+font-family: 'Noto Serif KR', serif;
+}
+
+.idForm{
+  border-bottom: 2px solid #adadad;
+  padding: 10px 10px;
+  margin: 70px 30px 40px 30px;
+  
+}
+
+.passForm{
+  border-bottom: 2px solid #adadad;
+  padding: 10px 10px;
+    margin: 70px 30px 40px 30px;
+}
+
+.id {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:20px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:20px;
+  height:25px;
+  background: none;
+}
+
+.btn {
+  position:relative;
+  left:40%;
+  transform: translateX(-50%);
+  margin: 70px 30px 40px 30px;
+  width:80%;
+  height:60px;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}
+
+.btn:hover {
+  background-position: right;
+}
+
+.bottomText {
+  text-align: center;
+}

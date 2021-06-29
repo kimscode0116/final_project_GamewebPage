@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Sunflower:wght@300&display=swap');
+/* 폰트 사용시 여기서 복사
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Sunflower', sans-serif;
+ */
+ 
+.loginForm .titleArea h2{
+  font-size:30px;
+  text-align: center;
+  margin: 10px auto auto auto;
+font-family: 'Noto Serif KR', serif;
+}
+
+.adminloginForm {
+/*   position:absolute; */
+  width:500px;
+  height:700px;
+  padding: 30px 20px 30px 20px;
+  background-color:#18191f;
+  color:white;
+  text-align:center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+  border-radius: 15px;
+}
+
+.admin_id {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #b1b294;
+  font-size:20px;
+  height:25px;
+  background: none;
+}
+
+.admin_pwd {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #b1b294;
+  font-size:20px;
+  height:25px;
+  background: none;
+}
