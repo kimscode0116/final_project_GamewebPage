@@ -7,8 +7,8 @@
 <meta charset="utf-8">
 <title>Main</title>
 <meta name="viewport" content="width-device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/main.css">
+<!-- <link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/main.css"> -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
 	rel="stylesheet">
@@ -18,8 +18,8 @@
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
- <link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/signup.css"> 
+<link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/signup.css">
 
 
 
@@ -44,9 +44,6 @@
 				<span>
 					<li><a href="question">Q&A</a></li>
 				</span>
-				<!-- <span>
-        <li><a href="createDB">테이블생성(추후삭제)</a></li>
-      </span> -->
 			</ul>
 		</nav>
 		<div class="dropdown">
@@ -54,71 +51,102 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="change">개인정보수정</a>
-				<a href="createDB">DB생성</a>
+				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="createDB">DB생성</a>
 			</div>
 		</div>
-		<script>
-			function myFunction(x) {
-				x.classList.toggle("change");
-			}
-		</script>
 	</header>
 	<main>
-		<div class="main1">
-			<div class="messageWrap">
-				<div class="container">
-					<div class="row">
-						<div class="panel panel-primary">
-							<div class="panel-body">
-								<form method="POST" action="signup_action" role="form">
-									<div class="form-group">
-										<h2>회원가입</h2>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupID">아이디</label> <input
-											id="user_id" name="user_id" type="text" maxlength="50"
-											class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupPassword">비밀번호</label>
-										<input id="user_pwd1" name="user_pwd1" type="password"
-											maxlength="25" class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupPasswordagain">비밀번호
-											확인</label> <input id="user_pwd2" name="user_pwd2" type="password"
-											maxlength="25" class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupName">이름</label> <input
-											id="user_name" name="user_name" type="text" maxlength="50"
-											class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupBirth">생년월일</label> <input
-											id="user_birth" name="user_birth" type="date" maxlength="50"
-											class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupEmail">Email</label> <input
-											id="user_email" name="user_email" type="email" maxlength="50"
-											class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="signupNickName">닉네임</label>
-										<input id="user_nickName" name="user_nickName" type="text"
-											maxlength="50" class="form-control">
-									</div>
-									<div class="form-group">
-										<button id="signupBtn" type="submit"
-											class="btn btn-info btn-block">가입하기</button>
-									</div>
-								</form>
-							</div>
-						</div>
+
+		<div class="wrapper">
+			<div class="content">
+				<div class="oneCategory">
+					<div class="wrapImageLogo">
+						<img src="./resources/image/mainLogo2.png">
+						<h2>
+							회원가입을 환영합니다. <br> 하단 이용약관 동의를 해주셔야 회원가입이 진행됩니다.
+						</h2>
 					</div>
 				</div>
+				<form action="" id="joinForm">
+					<ul class="join_box">
+						<li class="checkBox check02">
+							<ul class="clearfix">
+								<li>이용약관 동의(필수)</li>
+								<li class="checkBtn"><input type="checkbox" name="chk">
+								</li>
+							</ul> <textarea name="" id="">
+Oaia 게임 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 당사의 사이트 서비스의 이용과 관련하여 웹 서비스를 제공하는 Oaia 주식회사(이하 ‘Oaia’)와 이를 이용하는 Oaia 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 Oaia 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
+       </textarea>
+						</li>
+					</ul>
+				</form>
+				<form method="POST" action="signup_action" role="form">
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="id">아이디</label>
+						</h2>
+						<span class="box int_id"> <input type="text" id="user_id"
+							name="user_id" class="int" maxlength="20">
+						</span> <span class="error_next_box"></span>
+					</div>
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="pswd1">비밀번호</label>
+						</h2>
+						<span class="box int_pass"> <input type="password"
+							id="user_pwd1" name="user_pwd1" class="int" maxlength="25">
+							<span id="alertTxt">사용불가</span> <span class="error_next_box"></span>
+						</span>
+					</div>
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="pswd2">비밀번호 확인</label>
+						</h2>
+						<span class="box int_pass_check"> <input type="password"
+							id="user_pwd2" name="user_pwd2" class="int" maxlength="25">
+							<span id="alertTxt">사용불가</span> <span class="error_next_box"></span>
+						</span>
+					</div>
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="name">이름</label>
+						</h2>
+						<span class="box int_name"> <input type="text"
+							id="user_name" name="user_name" class="int" maxlength="50">
+						</span> <span class="error_next_box"></span>
+					</div>
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="name">생년월일</label>
+						</h2>
+						<span class="box bir_wrap"> <input type="date"
+							id="user_birth" name="user_birth" class="int" maxlength="50">
+						</span> <span class="error_next_box"></span>
+					</div>
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="email">Email</label>
+						</h2>
+						<span class="box int_email"> <input type="email"
+							id="user_email" name="user_email" class="int" maxlength="100"
+							placeholder="선택입력">
+						</span> <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
+					</div>
+					<div class="oneCategory">
+						<h2 class="join_title">
+							<label for="nickName">닉네임</label>
+						</h2>
+						<span class="box int_nickName"> <input type="text"
+							id="user_nickName" name="user_nickName" class="int"
+							maxlength="100" placeholder="선택입력">
+						</span> <span class="error_next_box"></span>
+					</div>
+					<div class="btn_area">
+						<button type="submit" class="btn btn-info btn-block"
+							id="signupBtn">가입하기</button>
+					</div>
+				</form>
+
 			</div>
 		</div>
 

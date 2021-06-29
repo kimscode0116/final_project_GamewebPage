@@ -28,11 +28,11 @@ public class GameDB {
 			String query2 = "CREATE TABLE gameData(idx INTEGER PRIMARY KEY AUTOINCREMENT, id TEXT, pwd TEXT, name TEXT, birthday TEXT, address TEXT, joindate TEXT)";
 			Statement statement2 = connection.createStatement();
 			int result2 = statement2.executeUpdate(query2);
-			
+
 			String query3 = "CREATE TABLE admin(idx INTEGER PRIMARY KEY AUTOINCREMENT, admin_id TEXT, admin_pwd TEXT, admin_name TEXT)";
 			Statement statement3 = connection.createStatement();
 			int result3 = statement3.executeUpdate(query3);
-			
+
 			String query4 = "CREATE TABLE board(idx INTEGER PRIMARY KEY AUTOINCREMENT, user_title TEXT, user_content TEXT, user_idx INTEGER, created TEXT, updated TEXT)";
 			Statement statement4 = connection.createStatement();
 			int result4 = statement4.executeUpdate(query4);
@@ -52,44 +52,43 @@ public class GameDB {
 
 		return true;
 	}
-	
-	
-	public int selectadminData() { // 관리자 정보 전체 조회
-//		String resultString = "";
-		int resultSet = 0;
+
+	public Admin selectadminData() { // 관리자 정보 전체 조회
+
+		Admin resultData = new Admin();
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:\\tomcat\\oaiaGamLab.db", config.toProperties());
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:\\tomcat\\oaiaGamLab.db",
+					config.toProperties());
 
-			String query = "SELECT * FROM admin";
+			String query = "SELECT * FROM admin;";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			resultSet = preparedStatement.executeUpdate();
-//			ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-//			while (resultSet.next()) {
-//				int idx = resultSet.getInt("idx");
-//				String admin_id = resultSet.getString("admin_id");
-//				String admin_pwd = resultSet.getString("admin_pwd");
-//				String admin_name = resultSet.getString("admin_name");
-//	
-//			}
+			if (resultSet.next()) {
+				resultData.idx = resultSet.getInt("idx");
+				resultData.admin_id = resultSet.getString("admin_id");
+				resultData.admin_pwd = resultSet.getString("admin_pwd");
+				resultData.admin_name = resultSet.getString("admin_name");
+			}
 			preparedStatement.close();
 			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return resultSet;
+		return resultData;
 	}
-	
+
 	public boolean insertadminDB() { // 관리자 정보 삽입
 		try {
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:\\tomcat\\oaiaGamLab.db", config.toProperties());
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:\\tomcat\\oaiaGamLab.db",
+					config.toProperties());
 
-			String query = "INSERT INTO admin (admin_id, admin_pwd, admin_name) VALUES ('admin1','admin1','고수진'), ('admin2','admin2','배영현'), ('admin3','admin3','김은혜'), ('admin4','admin4','박영선')";
+			String query = "INSERT INTO admin (admin_id, admin_pwd, admin_name) VALUES ('admin_gsj','admin_gsj','고수진'), ('admin_byh','admin_byh','배영현'), ('admin_keh','admin_keh','김은혜'), ('admin_pys','admin_pys','박영선')";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			int result = preparedStatement.executeUpdate();
 
@@ -100,22 +99,25 @@ public class GameDB {
 			}
 			preparedStatement.close();
 			connection.close();
-
-		} catch (Exception e) {
+			return true;
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			return false;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return true;
 	}
-	
+
 	public boolean loginadminDB(Admin admin) { // 관리자 로그인
 		try {
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:\\tomcat\\oaiaGamLab.db", config.toProperties());
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:\\tomcat\\oaiaGamLab.db",
+					config.toProperties());
 
 //			admin.admin_pwd = this.sha256(admin.admin_pwd);// password hash sha256 -> 주로사용
-			
+
 			String query = "SELECT * FROM admin WHERE admin_id=? AND admin_pwd=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, admin.admin_id);
@@ -130,14 +132,12 @@ public class GameDB {
 				connection.close();
 				return false;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		
-	}
 
-	
+	}
 
 }

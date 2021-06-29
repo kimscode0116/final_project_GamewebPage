@@ -7,11 +7,20 @@
 <meta charset="utf-8">
 <title>Main</title>
 <meta name="viewport" content="width-device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/main.css">
+<!-- <link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/main.css"> -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
 	rel="stylesheet">
+<!-- <link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css"> -->
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/signup.css">
+
 
 
 <!--CDN 링크 -->
@@ -35,9 +44,6 @@
 				<span>
 					<li><a href="question">Q&A</a></li>
 				</span>
-				<!-- <span>
-        <li><a href="createDB">테이블생성(추후삭제)</a></li>
-      </span> -->
 			</ul>
 		</nav>
 		<div class="dropdown">
@@ -45,27 +51,31 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a>
-				<a href="createDB">DB생성</a>
+				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="createDB">DB생성</a>
 			</div>
 		</div>
-		<script>
-			function myFunction(x) {
-				x.classList.toggle("change");
-			}
-		</script>
 	</header>
 	<main>
-		<div class="main1">
-			<div class="main1wrap">
-				<img src="./resources/image/mainPageLogo.png">
-				<div class="page">
-					<button class="fun-btn">GAME START</button>
+
+		<div class="wrapper">
+			<div class="content">
+				<div class="oneCategory">
+					<div class="wrapImageLogo">
+						<img src="./resources/image/mainLogo2.png">
+						<h2>
+						 <br> 로그인 시 입력한 비밀번호를 입력해주세요.
+						</h2>
+					</div>
 				</div>
+
+				<form method="POST" action="confirm_action" role="form">
+					<input type="password" id="pwd_confirm" name="pwd_confirm"
+						placeholder="비밀번호 입력"> <input type="submit" value="입력" />
+				</form>
+
 			</div>
 		</div>
-		<div class="main2"></div>
-		<div class="main3"></div>
+
 	</main>
 	<footer class="footer-distributed">
 		<div class="bottomWrap">
@@ -90,7 +100,6 @@
 				<p>OaiaGameCompany &copy; 2021</p>
 			</div>
 		</div>
-
 	</footer>
 </body>
 

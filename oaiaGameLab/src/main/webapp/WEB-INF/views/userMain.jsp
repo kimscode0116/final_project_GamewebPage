@@ -45,15 +45,10 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a>
+				<a href="logout">로그아웃</a><a href="myinfo_pwd">개인정보수정</a>
 				<a href="createDB">DB생성</a>
 			</div>
 		</div>
-		<script>
-			function myFunction(x) {
-				x.classList.toggle("change");
-			}
-		</script>
 	</header>
 	<main>
 		<div class="main1">

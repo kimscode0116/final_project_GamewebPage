@@ -47,8 +47,7 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="change">개인정보수정</a>
-				<a href="createDB">DB생성</a>
+				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="createDB">DB생성</a>
 
 			</div>
 		</div>
@@ -71,14 +70,12 @@
 				<div class="passForm">
 					<input type="password" name="user_pwd" class="pw" placeholder="PW">
 				</div>
-				<button type="submit" class="btn" onclick="button()">LOG IN</button>
+				<button type="submit" class="btn" >LOG IN</button>
 				<script>
-      				let button = () => {
-        	alert('login Button !')
-        }
+
       </script>
 				<div class="bottomText">
-					Don't you have ID? <a href="#">sign up</a><br></br>
+					Don't you have ID? <a href="signup">sign up</a><br></br>
 					Are you admin? <a href="adminlogin">Go admin</a>
 
 				</div>

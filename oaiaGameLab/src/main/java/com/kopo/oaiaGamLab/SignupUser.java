@@ -22,5 +22,14 @@ public class SignupUser {
 		this.nickname = nickname;
 		this.join_date = join_date;
 	}
+	
+	SignupUser(int idx,String pwd, String name, String birth, String email, String nickname){
+		this.idx = idx;
+		this.pwd = pwd;
+		this.name = name;
+		this.birth = birth;
+		this.email = email;
+		this.nickname = nickname;
+	}
 
 }

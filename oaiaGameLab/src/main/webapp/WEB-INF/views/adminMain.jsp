@@ -45,7 +45,7 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="change">개인정보수정</a>
+				<a href="logout">관리자 로그아웃</a> <a href="#">회원목록 조회</a> <a href="#">관리자 정보 수정</a>
 				<a href="createDB">DB생성</a>
 			</div>
 		</div>
@@ -57,14 +57,14 @@
 	</header>
 	<main>
 		<div class="main1">
-			<div class="main1wrap">
+			<div class="mainwrap">
 				<!-- <img src="./resources/image/mainPageLogo.png">
 				<div class="page">
 					<button class="fun-btn">GAME START</button>
 				</div> -->
 				<div class="adminMain">
 				<a><h1>현재 관리자 계정으로 로그인 중 </br> 
-				${m1}님의 로그인을 환영합니다.</h1></a>
+				${m1}님의 로그인</h1></a>
 				</div>
 			</div>
 		</div>
