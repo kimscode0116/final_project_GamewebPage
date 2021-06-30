@@ -30,7 +30,7 @@
 					<li><a href="rank">Ranking</a></li>
 				</span>
 				<span>
-					<li><a href="myList">TalktoTalk</a></li>
+					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
 					<li><a href="question">Q&A</a></li>
@@ -49,11 +49,6 @@
 				<a href="createDB">DB생성</a>
 			</div>
 		</div>
-		<script>
-			function myFunction(x) {
-				x.classList.toggle("change");
-			}
-		</script>
 	</header>
 	<main>
 		<div class="main1">

@@ -9,19 +9,17 @@
 <meta name="viewport" content="width-device-width, initial-scale=1">
 <!-- <link rel="stylesheet" type="text/css" media="screen"
 	href="./resources/main.css"> -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-	rel="stylesheet">
 <!-- <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css"> -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+	rel="stylesheet">
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/signup.css">
-
-
+	href="./resources/loginCheck.css">
 
 <!--CDN 링크 -->
 <!-- Bootstrap CSS -->
@@ -39,11 +37,12 @@
 					<li><a href="rank">Ranking</a></li>
 				</span>
 				<span>
-					<li><a href="myList">TalktoTalk</a></li>
+					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
 					<li><a href="question">Q&A</a></li>
 				</span>
+
 			</ul>
 		</nav>
 		<div class="dropdown">
@@ -51,26 +50,30 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a> <a href="createDB">DB생성</a>
+				<a href="logout">로그아웃</a><a href="myinfo_pwd">개인정보수정</a> <a
+					href="createDB">DB생성</a>
 			</div>
 		</div>
 	</header>
 	<main>
-
 		<div class="wrapper">
 			<div class="content">
 				<div class="oneCategory">
 					<div class="wrapImageLogo">
 						<img src="./resources/image/mainLogo2.png">
 						<h2>
-						 <br> 로그인 시 입력한 비밀번호를 입력해주세요.
+							<br> 로그인 시 입력한 비밀번호를 입력해주세요.
 						</h2>
 					</div>
 				</div>
-
 				<form method="POST" action="confirm_action" role="form">
-					<input type="password" id="pwd_confirm" name="pwd_confirm"
-						placeholder="비밀번호 입력"> <input type="submit" value="입력" />
+					<span class="box1 int_pwd">
+						<div class="pwd_wrap">
+							<input type="password" id="pwd_confirm" name="pwd_confirm"
+								class="pwd_confirm" placeholder="비밀번호 입력"> <input
+								type="submit" class="inputBtn" value="입력하기" />
+						</div>
+					</span>
 				</form>
 
 			</div>

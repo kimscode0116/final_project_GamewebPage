@@ -5,20 +5,13 @@
 font-family: 'Nanum Myeongjo', serif;
 font-family: 'Sunflower', sans-serif;
  */
-@import
-	url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Sunflower:wght@300&display=swap')
-	;
-/* 폰트 사용시 여기서 복사
-font-family: 'Nanum Myeongjo', serif;
-font-family: 'Sunflower', sans-serif;
- */
 html {
 	height: 100%;
 }
 
 body {
-	height: auto;
-	min-height:1700px;
+	height: 100%;
+	min-height: 1700px;
 	padding-top: 20px;
 	/* 	background: url("./image/background.jpg");
 	background-size: auto; */
@@ -26,6 +19,7 @@ body {
 
 header {
 	position: fixed;
+	z-index: 2;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -47,7 +41,6 @@ header {
 .idspace {
 	width: 50px;
 	margin: auto;
-	background: red;
 }
 
 span a img {
@@ -59,7 +52,6 @@ nav {
 	font-family: 'PT Sans', Arial, Sans-serif;
 	position: relative;
 	text-align: center;
-	/* background: red; */
 }
 
 nav li {
@@ -159,88 +151,8 @@ li a:hover {
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+
 /* <main page> */
-main {
-	height: auto;
-	min-height: 1000px;
-	/* padding: 200px 50px 50px 50px; */
-	margin-top: 50px;
-}
-
-.mainwrap {
-	/* width: 80%; */
-	background: white;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-main1 {
-	height: auto;
-	min-height: 1000px;
-	/* padding: 200px 50px 50px 50px; */
-	margin-top: 50px;
-}
-
-.main1wrap {
-	/* width: 80%; */
-	min-height: 800px;
-	background: url("https://i.gifer.com/Cat.gif");
-	background-size: cover;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.maintitle {
-	top: 0;
-	background: gray;
-	height: 100px;
-}
-
-.main1 .main1wrap {
-	width: 100%;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	padding-top: 6%;
-}
-
-.main1 img {
-	width: 1000px;
-	min-width: 300px;
-	height: auto;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.main1>img {
-	position: absolute;
-}
-
-.main2 {
-	width: 100%;
-	height: 500px;
-	background-image: url("./image/main3.png");
-	background-size: cover;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	background-position: 50% 80%;
-}
-
-.main3 {
-	width: 100%;
-	height: 600px;
-	background-image: url("./image/main2_2.png");
-	background-size: cover;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	background-position: 50% 80%;
-}
-
 .page {
 	width: auto;
 	display: flex;
@@ -435,7 +347,6 @@ to {
 ----------------------------------
 ----------------------------------
 터 본문 */
-
 .clearfix::after {
 	content: "";
 	display: block;
@@ -455,6 +366,7 @@ ul.join_box {
 .checkBox, .checkBox>ul {
 	position: relative;
 }
+
 ㄴ
 .checkBox>ul>li {
 	float: left;
@@ -519,11 +431,12 @@ ul.join_box {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	padding-top: 50px;
 }
 
 .content {
 	width: 565px;
-	margin-bottom: 50px;
+	margin-top: 100px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -544,9 +457,10 @@ ul.join_box {
 	margin-left: auto;
 	margin-right: auto;
 }
-.wrapImageLogo h2{
-	text-size:12px;
-	text-align:center;
+
+.wrapImageLogo h2 {
+	text-size: 12px;
+	text-align: center;
 }
 /* 입력폼 */
 .oneCategory {
@@ -581,8 +495,24 @@ h2 {
 	font-size: 15px;
 }
 
+.box_readonly {
+	display: block;
+	width: 100%;
+	height: 51px;
+	border: solid 1px #dadada;
+	padding: 10px 14px 10px 14px;
+	box-sizing: border-box;
+	background: #dfe0db;
+	position: relative;
+}
+
+
 input {
 	font-family: 'Nanum Myeongjo', serif;
+}
+
+.box_readonly.int_id {
+	padding-right: 110px;
 }
 
 .box.int_id {
@@ -595,6 +525,11 @@ input {
 
 .box.int_pass_check {
 	padding-right: 40px;
+}
+
+.pwd_confirm {
+	width: 80%;
+	background: black;
 }
 
 .step_url {

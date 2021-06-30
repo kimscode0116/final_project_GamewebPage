@@ -32,14 +32,11 @@
 					<li><a href="rank">Ranking</a></li>
 				</span>
 				<span>
-					<li><a href="myList">TalktoTalk</a></li>
+					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
 					<li><a href="question">Q&A</a></li>
 				</span>
-				<!-- <span>
-        <li><a href="createDB">테이블생성(추후삭제)</a></li>
-      </span> -->
 			</ul>
 		</nav>
 		<div class="dropdown">
@@ -51,11 +48,6 @@
 
 			</div>
 		</div>
-		<script>
-			function myFunction(x) {
-				x.classList.toggle("change");
-			}
-		</script>
 	</header>
 	<main>
 		<div class="loginWrap">
@@ -71,9 +63,6 @@
 					<input type="password" name="user_pwd" class="pw" placeholder="PW">
 				</div>
 				<button type="submit" class="btn" >LOG IN</button>
-				<script>
-
-      </script>
 				<div class="bottomText">
 					Don't you have ID? <a href="signup">sign up</a><br></br>
 					Are you admin? <a href="adminlogin">Go admin</a>
