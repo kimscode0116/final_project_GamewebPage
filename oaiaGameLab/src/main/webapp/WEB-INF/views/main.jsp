@@ -27,7 +27,7 @@
 		<nav>
 			<ul class="menubar">
 				<span>
-					<li><a href="rank">Ranking</a></li>
+					<li><a href="ranking">Ranking</a></li>
 				</span>
 				<span>
 					<li><a href="boardList">TalktoTalk</a></li>
@@ -45,12 +45,13 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="login">로그인</a> <a href="signup">회원가입</a>
+				${userOradmin} 
 				<a href="createDB">DB생성</a>
 			</div>
 		</div>
 	</header>
 	<main>
+		${m1}
 		<div class="main1">
 			<div class="main1wrap">
 				<img src="./resources/image/mainPageLogo.png">

@@ -30,30 +30,28 @@ public class HomeController {
 		String login_id = (String) session.getAttribute("login_id");
 
 		if (is_login == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
 			return "main";
 		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
-			model.addAttribute("m1", login_id);
-			return "adminMain";
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			model.addAttribute("m1", login_id + "님의 관리자모드");
+			return "main";
 		} else
-			return "userMain";
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		return "main";
 	}
 
 	@RequestMapping(value = "/createDB", method = RequestMethod.GET)
 	public String createTable(Locale locale, Model model) {
-		GameDB db = new GameDB();
+		AdminDB db = new AdminDB();
 		boolean isSuccess = db.createDB();
 		if (isSuccess) {
 			model.addAttribute("m1", "Complete");
-
 		} else {
 			model.addAttribute("m1", "Already exist");
 		}
 		return "message";
-	}
-
-	@RequestMapping(value = "/game", method = RequestMethod.GET)
-	public String startGame(Locale locale, Model model) {
-		return "game";
 	}
 
 	// 관리자 로그인
@@ -65,7 +63,7 @@ public class HomeController {
 			e.printStackTrace();
 		}
 
-		GameDB db = new GameDB();
+		AdminDB db = new AdminDB();
 		Admin resultSet = db.selectadminData();
 
 		if (resultSet.idx < 1) { // db 비어있을 경우, 관리자 4개 id 생성
@@ -92,7 +90,7 @@ public class HomeController {
 		String admin_pwd = request.getParameter("admin_pwd");
 
 		Admin admin = new Admin(admin_id, admin_pwd);
-		GameDB db = new GameDB();
+		AdminDB db = new AdminDB();
 		boolean isSuccess = db.loginadminDB(admin);
 
 		if (isSuccess) {
@@ -108,6 +106,88 @@ public class HomeController {
 			model.addAttribute("m1", "Login Error.");
 			return "message";
 		}
+	}
+
+	// 관리자 정보 페이지
+
+	// 관리자 정보 수정 페이지 진입 전 비밀번호 대조 페이지
+	@RequestMapping(value = "/admininfo_pwd", method = RequestMethod.GET)
+	public String admininfoPwd(HttpServletRequest request, Locale locale, Model model) {
+		HttpSession session = request.getSession();
+
+		Boolean is_login = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		model.addAttribute("userOradmin",
+				"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+		return "admininfo_confirm";
+	}
+
+	@RequestMapping(value = "/adminconfirm_action", method = RequestMethod.POST)
+	public String adminpwdConfirm(HttpServletRequest request, Locale locale, Model model) {
+
+		AdminDB db = new AdminDB();
+		String inputadmin_pwd = request.getParameter("pwd_confirm");
+		HttpSession session = request.getSession();
+		String admin_pwd = (String) session.getAttribute("login_pwd");
+
+		if (inputadmin_pwd.equals(admin_pwd)) {
+			return "redirect:/admininfo";
+
+		}
+		return "admininfo_pwd";
+	}
+
+	// 관리자 정보 수정 페이지
+	@RequestMapping(value = "/admininfo", method = RequestMethod.GET)
+	public String admininfo(HttpServletRequest request, Locale locale, Model model) {
+		HttpSession session = request.getSession();
+		boolean isLogin = (Boolean) session.getAttribute("is_login");
+		if (isLogin) {
+			// 세션에서 id 가져오기
+			String admin_id = (String) session.getAttribute("login_id");
+			AdminDB db = new AdminDB();
+			Admin admin = db.detalisAdmin(admin_id);
+			System.out.println(admin.admin_id + admin.admin_pwd + admin.admin_name);
+			model.addAttribute("admin_id", admin.admin_id);
+			model.addAttribute("admin_pwd", admin.admin_pwd);
+			model.addAttribute("admin_name", admin.admin_name);
+		}
+		return "admininfo";
+	}
+
+	@RequestMapping(value = "/adminupdate_action", method = RequestMethod.POST)
+	public String adminupdat(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("admin_pwd1") String noChangePwd, @RequestParam("admin_pwd2") String ChangePwd,
+			@RequestParam("admin_name") String admin_name) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		String admin_id = (String) session.getAttribute("login_id");
+		AdminDB db = new AdminDB();
+		if (ChangePwd == "") {
+			ChangePwd = noChangePwd;
+		} else {
+			ChangePwd = ChangePwd;
+		}
+		Admin admin = new Admin(admin_id, ChangePwd, admin_name);
+		boolean isSuccess = db.updateAdmin(admin);
+		if (isSuccess) {
+			return "redirect:/";
+		}
+		return "redirect:/admininfo";
+	}
+
+	// 관리자 권한 - 전체 회원 정보 조회
+	@RequestMapping(value = "/userList", method = RequestMethod.GET)
+	public String selectuser(Locale locale, Model model) {
+		AdminDB userdb = new AdminDB();
+		String htmlString = userdb.selectuserData();
+		model.addAttribute("userList", htmlString);
+		return "userList";
 	}
 
 	// 회원가입 라우터
@@ -177,7 +257,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/confirm_action", method = RequestMethod.POST)
 	public String pwdConfirm(HttpServletRequest request, Locale locale, Model model) {
-
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		UserDB db = new UserDB();
 		String user_pwd = request.getParameter("pwd_confirm");
 		user_pwd = db.sha256(user_pwd);
@@ -192,6 +276,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
 	public String myinfo(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		boolean isLogin = (Boolean) session.getAttribute("is_login");
 		if (isLogin) {
@@ -212,11 +301,16 @@ public class HomeController {
 		return "myinfo";
 	}
 
-	@RequestMapping(value = "/update_action", method = RequestMethod.GET)
-	public String update(Locale locale, Model model, @RequestParam("idx") int idx,
+	@RequestMapping(value = "/update_action", method = RequestMethod.POST)
+	public String update(HttpServletRequest request, Locale locale, Model model, @RequestParam("idx") int idx,
 			@RequestParam("user_pwd1") String noChangePwd, @RequestParam("user_pwd2") String ChangePwd,
 			@RequestParam("user_name") String user_name, @RequestParam("user_birth") String user_birth,
 			@RequestParam("user_email") String user_email, @RequestParam("user_nickName") String user_nickName) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		UserDB db = new UserDB();
 		if (ChangePwd == "") {
 			ChangePwd = noChangePwd;
@@ -234,6 +328,11 @@ public class HomeController {
 	// 로그아웃 라우터
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
@@ -241,10 +340,29 @@ public class HomeController {
 
 	// 자유게시판
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public String selectData(Locale locale, Model model) {
+	public String selectData(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean is_login = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
 
 		UserDB userdb = new UserDB();
 		String htmlString = userdb.boardSelect();
+
+		if (is_login == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			return "boardList";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			return "boardList";
+		} else
+
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
 		model.addAttribute("boardList", htmlString);
 		return "boardList";
 	}
@@ -258,27 +376,38 @@ public class HomeController {
 		}
 		HttpSession session = request.getSession();
 		UserDB userdb = new UserDB();
-		GameDB gamedb = new GameDB();
+		AdminDB gamedb = new AdminDB();
 		SignupUser user = new SignupUser();
 		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
 
 		String login_id = (String) session.getAttribute("login_id");
 
-		if (isSuccess == null) { // !isSuccess
-			System.out.println("비로그인");
-			model.addAttribute("user_id","noname");
+		if (isSuccess == null) {
+			model.addAttribute("user_id", "noname");
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+
 			return "boardInsert";
 		} else {
 			if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
-				model.addAttribute("user_id",login_id);
-				System.out.println("관리자 로그인");
+				model.addAttribute("userOradmin",
+						"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+				model.addAttribute("user_id", login_id);
 				return "boardInsert";
 			} else { // 유저 로그인
-				System.out.println("유저 로그인");
-				model.addAttribute("user_id",login_id);
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+				model.addAttribute("user_id", login_id);
 				return "boardInsert";
 			}
 		}
+	}
+
+	// 랭킹 페이지
+	@RequestMapping(value = "/ranking", method = RequestMethod.GET)
+	public String ranking(Locale locale, Model model) {
+		GameDB db = new GameDB();
+		String htmlString = db.rankData();
+		model.addAttribute("rankList", htmlString);
+		return "ranking";
 	}
 
 }

@@ -7,11 +7,6 @@
 <meta charset="utf-8">
 <title>Main</title>
 <meta name="viewport" content="width-device-width, initial-scale=1">
-<!-- <link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/main.css"> -->
-<!-- <link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css"> -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
 	rel="stylesheet">
@@ -19,7 +14,10 @@
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/loginCheck.css">
+	href="./resources/boardInsert.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/ranking.css">
+
 
 <!--CDN 링크 -->
 <!-- Bootstrap CSS -->
@@ -42,7 +40,6 @@
 				<span>
 					<li><a href="question">Q&A</a></li>
 				</span>
-
 			</ul>
 		</nav>
 		<div class="dropdown">
@@ -50,35 +47,56 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="logout">로그아웃</a><a href="myinfo_pwd">개인정보수정</a> <a
-					href="createDB">DB생성</a>
+				${userOradmin} <a href="createDB">DB생성</a>
 			</div>
 		</div>
 	</header>
 	<main>
 		<div class="wrapper">
-			<div class="content">
-				<div class="oneCategory">
-					<div class="wrapImageLogo">
-						<img src="./resources/image/mainLogo2.png">
-						<h2>
-							<br> 로그인 시 입력한 비밀번호를 입력해주세요.
-						</h2>
-					</div>
+			<section class="wrap">
+				<div class="rankingPng">
+					<img src="./resources/image/ranking123.png">
 				</div>
-				<form method="POST" action="confirm_action" role="form">
-					<span class="box1 int_pwd">
-						<div class="pwd_wrap">
-							<input type="password" id="pwd_confirm" name="pwd_confirm"
-								class="pwd_confirm" placeholder="비밀번호 입력"> <input
-								type="submit" class="inputBtn" value="입력하기" />
-						</div>
-					</span>
-				</form>
-
-			</div>
+				<table class="ranking123">
+					<colgroup>
+						<col width="30%" />
+						<col width="30%" />
+						<col width="30%" />
+					</colgroup>
+					<thead>
+						<tr class="title123">
+							<th class="raning1">1등</th>
+							<th class="raning2">2등</th>
+							<th class="raning3">3등</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="raning1">김씨는 나야</td>
+							<td class="raning2">김씨는 나야</td>
+							<td class="raning3">김씨는 나야</td>
+						</tr>
+						<tr>
+							<td class="raning1">16</td>
+							<td class="raning2">15</td>
+							<td class="raning3">14</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="allranking">
+					<thead>
+						<tr>
+							<th>랭킹</th>
+							<th>닉네임</th>
+							<th>점수</th>
+						</tr>
+					</thead>
+					<tbody>${rankList }
+					</tbody>
+				</table>
+				<br>
+			</section>
 		</div>
-
 	</main>
 	<footer class="footer-distributed">
 		<div class="bottomWrap">
@@ -105,5 +123,4 @@
 		</div>
 	</footer>
 </body>
-
 </html>

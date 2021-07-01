@@ -28,7 +28,7 @@
 		<nav>
 			<ul class="menubar">
 				<span>
-					<li><a href="rank">Ranking</a></li>
+					<li><a href="ranking">Ranking</a></li>
 				</span>
 				<span>
 					<li><a href="boardList">TalktoTalk</a></li>
@@ -151,39 +151,5 @@
 		</div>
 	</footer>
 </body>
-<script>
-	$("#signupBtn").click(function() {
-		if ($("#user_id").val() == "") {
-			alert("아이디를 입력해 주세요");
-			$("#user_id").focus();
-			return false;
-		} else if ($("#user_pwd1").val() == "") {
-			alert("비밀번호를 입력해 주세요");
-			$("#user_pwd1").focus();
-			return false;
-		} else if ($("#user_pwd1").val() != $("#user_pwd2").val()) {
-			alert("비밀번호 확인이 일치하지 않습니다.");
-			$("#user_pwd2").focus();
-			return false;
-		} else if ($("#user_name").val() == "") {
-			alert("이름을 입력해 주세요");
-			$("#user_name").focus();
-			return false;
-		} else if ($("#user_birth").val() == "") {
-			alert("생년월일을 선택해 주세요");
-			$("#user_birth").focus();
-			return false;
-		} else if ($("#user_email").val() == "") {
-			alert("이메일 주소를 입력해 주세요");
-			$("#user_email").focus();
-			return false;
-		} else if ($("#user_nickName").val() == "") {
-			alert("닉네임을 입력해 주세요");
-			$("#user_nickName").focus();
-			return false;
-		}
-
-	});
-</script>
 
 </html>

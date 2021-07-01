@@ -6,57 +6,69 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.sqlite.SQLiteConfig;
 
 public class UserDB {
 
 	// 회원가입 메서드
-	public String signup(SignupUser signupUser) {
-		String resultString = "";
-		try {
-			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
-			// use
-			signupUser.pwd = sha256(signupUser.pwd);
+	   public String signup(SignupUser signupUser) {
+	      String resultString = "";
+	      try {
+	         // open
+	         Connection connection = null;
+	         Statement statement = null;
+	         ResultSet resultset = null;
 
-			// 아이디 중복확인
-			String query1 = "SELECT * FROM user WHERE user_id=" + "'" + signupUser.id + "'";
-			PreparedStatement preparedStatement = connection.prepareStatement(query1);
-			ResultSet resultdata = preparedStatement.executeQuery();
-			if (resultdata.next()) {
-				resultString = "중복된 아이디가 존재합니다.";
-			} else {
-				String query = "INSERT INTO user (user_id,user_pwd,user_name,user_birth,user_email,user_nickName,join_date)"
-						+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
-				preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setString(1, signupUser.id);
-				preparedStatement.setString(2, signupUser.pwd);
-				preparedStatement.setString(3, signupUser.name);
-				preparedStatement.setString(4, signupUser.birth);
-				preparedStatement.setString(5, signupUser.email);
-				preparedStatement.setString(6, signupUser.nickname);
-				preparedStatement.setString(7, signupUser.join_date);
-				int result = preparedStatement.executeUpdate();
-				if (result < 1) {
-					resultString = "error";
-				} else {
-					resultString = "회원가입이 완료되었습니다.";
-				}
-			}
-			preparedStatement.close();
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "oaiagame", "oaiagame");
+	         // use
+	         signupUser.pwd = sha256(signupUser.pwd);
 
-			// close
-			connection.close();
+	         // 아이디,닉네임 중복확인
+	         String query1 = "SELECT * FROM users WHERE user_id=" + "'" + signupUser.id + "' OR user_nickname=" + "'" + signupUser.nickname + "'";
+	         PreparedStatement preparedStatement = connection.prepareStatement(query1);
+	         ResultSet resultdata = preparedStatement.executeQuery();
+	         if (resultdata.next()) {
+	            String user_id = resultdata.getString("user_id");
+	            String user_nickname = resultdata.getString("user_nickname");
+	            if(user_id.equals(signupUser.id)) {
+	               resultString = "중복된 아이디가 존재합니다.";
+	            }else if(user_nickname.equals(signupUser.nickname)) {
+	               resultString = "중복된 닉네임이 존재합니다.";
+	            }
+	         } else {
+	            String query = "INSERT INTO users (idx,user_id,user_pwd,user_name,user_birth,user_email,user_nickName,join_date)"
+	                  + " VALUES (users_idx.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+	            preparedStatement = connection.prepareStatement(query);
+	            preparedStatement.setString(1, signupUser.id);
+	            preparedStatement.setString(2, signupUser.pwd);
+	            preparedStatement.setString(3, signupUser.name);
+	            preparedStatement.setString(4, signupUser.birth);
+	            preparedStatement.setString(5, signupUser.email);
+	            preparedStatement.setString(6, signupUser.nickname);
+	            preparedStatement.setString(7, signupUser.join_date);
+	            System.out.println("오류1?"+signupUser.id);
+	            int result = preparedStatement.executeUpdate();
+	            System.out.println(result);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return resultString;
-	}
+	            if (result < 1) {
+	               resultString = "error";
+	            } else {
+	               resultString = "회원가입이 완료되었습니다.";
+	            }
+	         }
+	         preparedStatement.close();
+
+	         // close
+	         connection.close();
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return resultString;
+	   }
 
 	// 비밀번호 해시처리
 	public String sha256(String msg) {
@@ -79,15 +91,17 @@ public class UserDB {
 	public int userlogin(String id, String pwd) {
 		try {
 			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 			// use
 			pwd = this.sha256(pwd);
 
 			// 아이디, 패스워드 있는지 검사
-			String query = "SELECT * FROM user WHERE user_id=? AND user_pwd=?";
+			String query = "SELECT * FROM users WHERE user_id=? AND user_pwd=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, id);
 			preparedStatement.setString(2, pwd);
@@ -114,12 +128,14 @@ public class UserDB {
 		SignupUser resultData = new SignupUser();
 		try {
 			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 			// use
-			String query = "SELECT * FROM user WHERE idx=" + idx;
+			String query = "SELECT * FROM users WHERE idx=" + idx;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
@@ -143,12 +159,14 @@ public class UserDB {
 	public boolean updateData(SignupUser signupUser) {
 		try {
 			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 			// use
-			String query = "UPDATE user SET user_pwd=?, user_name=?, user_birth=?, user_email=?, user_nickName=? WHERE idx="
+			String query = "UPDATE users SET user_pwd=?, user_name=?, user_birth=?, user_email=?, user_nickName=? WHERE idx="
 					+ signupUser.idx;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, signupUser.pwd);
@@ -176,16 +194,17 @@ public class UserDB {
 	// 자유게시판
 	public String boardList() {
 		String resultString = "";
-
 		try {
 			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 
 			// use
-			String query = "SELECT * FROM board;";
+			String query = "SELECT * FROM board";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -219,13 +238,15 @@ public class UserDB {
 		String resultString = "";
 		try {
 			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+			
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 
 			// use
-			String query = "SELECT * FROM board;";
+			String query = "SELECT * FROM board";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -256,21 +277,24 @@ public class UserDB {
 	}
 
 	public boolean boardInsert(Board board) {
-		// open
 		try {
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "C:/tomcat/oaiaGamLab.db",
-					config.toProperties());
+			// open
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+			
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 
-			String fieldString = "user_title, user_content, user_idx, created, updated";
-			String query = "INSERT INTO board (" + fieldString + ") VALUES (?, ?, ?, ?, ?);";
+			String fieldString = "idx, user_title, user_content, user_idx, created, updated";
+			String query = "INSERT INTO board (" + fieldString + ") VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, board.user_title);
-			preparedStatement.setString(2, board.user_content);
-			preparedStatement.setInt(3, board.user_idx);
-			preparedStatement.setString(4, board.created);
-			preparedStatement.setString(5, board.updated);
+			preparedStatement.setString(1, "board_idx.NEXTVAL");
+			preparedStatement.setString(2, board.user_title);
+			preparedStatement.setString(3, board.user_content);
+			preparedStatement.setInt(4, board.user_idx);
+			preparedStatement.setString(5, board.created);
+			preparedStatement.setString(6, board.updated);
 
 			int finalResult = preparedStatement.executeUpdate();
 

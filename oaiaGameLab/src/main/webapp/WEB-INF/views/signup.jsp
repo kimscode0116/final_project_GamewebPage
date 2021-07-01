@@ -36,7 +36,7 @@
 		<nav>
 			<ul class="menubar">
 				<span>
-					<li><a href="rank">Ranking</a></li>
+					<li><a href="ranking">Ranking</a></li>
 				</span>
 				<span>
 					<li><a href="boardList">TalktoTalk</a></li>
