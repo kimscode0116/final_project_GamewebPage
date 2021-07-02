@@ -51,11 +51,38 @@ public class AdminDB {
 			Statement statement5 = connection.createStatement();
 			int result5 = statement4.executeUpdate(query5);
 
+			String query6 = "CREATE TABLE question(" + " idx NUMBER(5) PRIMARY KEY,"
+					+ " question_title VARCHAR2(4000) NOT NULL," + " user_id VARCHAR2(4000) NOT NULL,"
+					+ " question_content VARCHAR2(4000) NOT NULL," + " created VARCHAR2(4000) NOT NULL,"
+					+ " answer VARCHAR2(4000)" + ")";
+			Statement statement6 = connection.createStatement();
+			int result6 = statement6.executeUpdate(query6);
+
+			String query7 = "CREATE SEQUENCE question_idx INCREMENT BY 1 START WITH 1";
+			Statement statement7 = connection.createStatement();
+			int result7 = statement7.executeUpdate(query7);
+			
+			String query8 = "CREATE TABLE ranking("
+					+ " idx NUMBER(5) PRIMARY KEY,"
+					+ " nickname VARCHAR2(4000) NOT NULL,"
+					+ " score NUMBER"
+					+ ")";
+			Statement statement8 = connection.createStatement();
+			int result8 = statement8.executeUpdate(query8);
+			
+			String query9 = "CREATE SEQUENCE ranking_idx INCREMENT BY 1 START WITH 1";
+			Statement statement9 = connection.createStatement();
+			int result9 = statement9.executeUpdate(query9);
+
 			statement.close();
 			statement2.close();
 			statement3.close();
 			statement4.close();
 			statement5.close();
+			statement6.close();
+			statement7.close();
+			statement8.close();
+			statement9.close();
 			connection.close();
 
 			// close
@@ -251,16 +278,16 @@ public class AdminDB {
 			while (resultSet.next()) {
 				int idx = resultSet.getInt("idx");
 				String id = resultSet.getString("user_id");
-				String pwd = resultSet.getString("user_pwd");
 				String name = resultSet.getString("user_name");
 				String birth = resultSet.getString("user_birth");
 				String email = resultSet.getString("user_email");
 				String nickname = resultSet.getString("user_nickName");
 				String join_date = resultSet.getString("join_date");
 				resultString = resultString + "<tr>";
-				resultString = resultString + "<td>" + idx + "</td><td>" + id + "</td><td>" + name + "</td><td>" + birth
-						+ "</td><td>" + email + "</td><td>" + nickname + "</td><td>" + join_date + "</td><td>"
-						+ "</td>";
+				resultString = resultString + "<td class='idx'>" + idx + "</td><td class='id'>" + id
+						+ "</td><td class='name'>" + name + "</td><td class='birth'>" + birth
+						+ "</td><td class='email'>" + email + "</td><td class='nickname'>" + nickname
+						+ "</td><td class='join_date'>" + join_date + "</td>";
 				resultString = resultString + "</tr>";
 			}
 
@@ -276,4 +303,88 @@ public class AdminDB {
 		}
 		return resultString;
 	}
+
+	// Q&A 리스트 조회
+	public String selectQuestion() { // 관리자 권한 - 전체 Q&A 조회
+		String resultString = "";
+		try {
+			// open
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+			// use
+			String query = "SELECT * FROM question";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				int idx = resultSet.getInt("idx");
+				String question_title = resultSet.getString("question_title");
+				String user_id = resultSet.getString("user_id");
+				String created = resultSet.getString("created");
+				String answer = resultSet.getString("answer");
+				resultString = resultString + "<tr>";
+				resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'>" + question_title
+						+ "</td><td class='id'>" + user_id + "</td><td class='created'>" + created
+						+ "</td><td class='answer'>" + answer + "</td>";
+				resultString = resultString + "</tr>";
+				System.out.println(resultString);
+			}
+
+			// close
+			preparedStatement.close();
+			connection.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultString;
+	}
+	
+	// 관리자 게임 scroe
+		public String adminScore(String adminId) {
+			try {
+				// open
+				Connection connection = null;
+				Statement statement = null;
+				ResultSet resultSet = null;
+				
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+				String query1 = "SELECT admin_name FROM admins WHERE admin_id ='" + adminId + "'"; // 닉네임 가져오기
+				PreparedStatement preparedStatement = connection.prepareStatement(query1);
+				ResultSet resultSet1 = preparedStatement.executeQuery();
+				String adminName = "";
+				if (resultSet1.next()) {
+					adminName = resultSet1.getString("admin_name");
+				}
+				
+				String query2 = "SELECT * FROM ranking WHERE nickname=" + "'" + adminName + "'";
+				preparedStatement = connection.prepareStatement(query2);
+				ResultSet resultSet2 = preparedStatement.executeQuery();
+				if (resultSet2.next()) {
+					
+				} else {
+					String query3 = "INSERT INTO ranking (idx, nickname, score)" + "VALUES (ranking_idx.nextval, '" + adminName + "', 0)"; // ranking에 닉, score = 0 추가
+					Statement statement1 = connection.createStatement();
+					int result = statement1.executeUpdate(query3); // executeUpdate는 결과값만 나옴 (update, insert에 사용!)
+				}
+				preparedStatement.close();
+				connection.close();
+
+				return adminName;
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "ERROR";
+			}
+		}
 }

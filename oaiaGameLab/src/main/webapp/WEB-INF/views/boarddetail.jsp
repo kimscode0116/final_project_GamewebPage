@@ -7,16 +7,15 @@
 <meta charset="utf-8">
 <title>Main</title>
 <meta name="viewport" content="width-device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/main.css">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
 	rel="stylesheet">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/boarddetail.css">
 
-
-<!--CDN 링크 -->
-<!-- Bootstrap CSS -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 </head>
 
 <body>
@@ -35,9 +34,6 @@
 				<span>
 					<li><a href="question">Q&A</a></li>
 				</span>
-				<!-- <span>
-        <li><a href="createDB">테이블생성(추후삭제)</a></li>
-      </span> -->
 			</ul>
 		</nav>
 		<div class="dropdown">
@@ -45,23 +41,53 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				${userOradmin} 
-				<a href="createDB">DB생성</a>
+				${userOradmin} <a href="createDB">DB생성</a>
 			</div>
 		</div>
 	</header>
 	<main>
-		${m1}
-		<div class="main1">
-			<div class="main1wrap">
-				<img src="./resources/image/mainPageLogo.png">
-				<div class="page">
-					<button class="fun-btn" onclick=${gameCheck }>GAME START</button>
-				</div>
+		<div class="wrapper">
+			<span class="mainTitle"> <a href="boardList"> <img
+					src="./resources/image/talktoTalk_title2.png"></a>
+			</span>
+			<div class="content">
+				<section class="wrap">
+					<table class="contents">
+						<tbody>
+							<tr class="upper">
+								<th>게시물번호</th>
+								<td><span type="text" name="idx" value="${idx}">${idx }</span></td>
+							</tr>
+							<tr class="upper">
+								<th>제목</th>
+								<td><span type="text" name="user_title"
+									value="${user_title}">${user_title}</span></td>
+							</tr>
+							<tr class="upper">
+								<th>작성자</th>
+								<td><span type="text" name="user_nickname"
+									value="${user_nickname}">${user_nickname}</span></td>
+
+							</tr>
+							<tr class="upper">
+								<th>작성시간</th>
+								<td><span type="text" name="created" value="${created}">${created}</span></td>
+							</tr>
+							<tr class="bottom">
+								<th>내용</th>
+								<td><span type="text" name="user_content"
+									value="${user_content}">${user_content}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
 			</div>
+			<tr class="btnArea">
+				<td class="insertBtn"><div class="boardInsertBtn">
+						<a href='update?idx=${idx}'>수정하기</a><a href="delete?user_nickname='${user_nickname}'&idx=${idx}">삭제하기</a>
+					</div></td>
+			</tr>
 		</div>
-		<div class="main2"></div>
-		<div class="main3"></div>
 	</main>
 	<footer class="footer-distributed">
 		<div class="bottomWrap">
@@ -86,8 +112,6 @@
 				<p>OaiaGameCompany &copy; 2021</p>
 			</div>
 		</div>
-
 	</footer>
 </body>
-
 </html>

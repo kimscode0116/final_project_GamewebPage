@@ -192,8 +192,173 @@ public class UserDB {
 		return true;
 	}
 
-	public String boardSelect() {
-		String resultString = "";
+	   // 자유게시판 관리자 게시글
+	   public String noticeSelect() {
+	      String resultString = "";
+	      try {
+	         // open
+	         Connection connection = null;
+	         Statement statement = null;
+	         ResultSet resultset = null;
+
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	         // use
+	         String query = "SELECT * FROM board WHERE user_nickname = '" + "관리자" + "'";
+	         PreparedStatement preparedStatement = connection.prepareStatement(query);
+	         ResultSet resultSet = preparedStatement.executeQuery();
+
+	         while (resultSet.next()) {
+	            int idx = resultSet.getInt("idx");
+	            String user_title = resultSet.getString("user_title");
+	            String user_content = resultSet.getString("user_content");
+	            String user_nickname = resultSet.getString("user_nickname");
+	            String created = resultSet.getString("created");
+	            resultString = resultString + "<tr>";
+	            resultString = resultString + "<td class='idx'>" + "**공지**" + "</td><td class='title'><a href='#'>"
+	                  + user_title + "</a></td><td class='name'>" + user_nickname + "</td><td class='date'>" + created
+	                  + "</td>";
+	            resultString = resultString + "</tr>";
+	         }
+
+	         // close
+	         preparedStatement.close();
+	         connection.close();
+	      } catch (ClassNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	      return resultString;
+	   }
+	   
+	   
+	   // 자유게시판 일반 게시글
+	   public String boardSelect() {
+	      String resultString = "";
+	      try {
+	         // open
+	         Connection connection = null;
+	         Statement statement = null;
+	         ResultSet resultset = null;
+
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	         // use
+	         String query = "SELECT * FROM board WHERE user_nickname != '" + "관리자" + "'";
+	         PreparedStatement preparedStatement = connection.prepareStatement(query);
+	         ResultSet resultSet = preparedStatement.executeQuery();
+
+	         while (resultSet.next()) {
+	            int idx = resultSet.getInt("idx");
+	            String user_title = resultSet.getString("user_title");
+	            String user_content = resultSet.getString("user_content");
+	            String user_nickname = resultSet.getString("user_nickname");
+	            String created = resultSet.getString("created");
+	            resultString = resultString + "<tr>";
+	            resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'><a href='#'>"
+	                  + user_title + "</a></td><td class='name'>" + user_nickname + "</td><td class='date'>" + created
+	                  + "</td>";
+	            resultString = resultString + "</tr>";
+	         }
+
+	         // close
+	         preparedStatement.close();
+	         connection.close();
+	      } catch (ClassNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	      return resultString;
+	   }
+
+	   // 자유게시판 닉네임 가져오기
+	   public String nicknameSelect(SignupUser user) {
+	      System.out.println("오류1");
+	      System.out.println(user.id);
+	      String user_nickname = "";
+	      try {
+	         // open
+	         Connection connection = null;
+	         Statement statement = null;
+	         ResultSet resultset = null;
+
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	         String query = "SELECT user_nickname FROM users WHERE user_id ='" + user.id + "'"; // 닉네임 가져오기
+	         PreparedStatement preparedStatement = connection.prepareStatement(query);
+	         ResultSet resultSet = preparedStatement.executeQuery();
+	         if (resultSet.next()) {
+	            user_nickname = resultSet.getString("user_nickname");
+	         }
+	         System.out.println("오류2" + user_nickname);
+	         preparedStatement.close();
+	         connection.close();
+	         return user_nickname;
+	         // close
+	      } catch (ClassNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	      return user_nickname;
+	   }
+
+	   // 자유게시판 게시글 등록
+	   public boolean boardInsert(Board board) {
+	      System.out.println("게시판 : " + board.user_title);
+	      System.out.println("게시판내용 : " + board.user_content);
+	      System.out.println("글쓴이 : " + board.user_nickname);
+	      try {
+	         // open
+	         Connection connection = null;
+	         Statement statement = null;
+	         ResultSet resultset = null;
+
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	         String fieldString = "idx, user_title, user_content, user_nickname, created";
+	         String query = "INSERT INTO board (" + fieldString + ") VALUES (board_idx.NEXTVAL, ?, ?, ?, ?)";
+	         PreparedStatement preparedStatement = connection.prepareStatement(query);
+	         preparedStatement.setString(1, board.user_title);
+	         preparedStatement.setString(2, board.user_content);
+	         preparedStatement.setString(3, board.user_nickname);
+	         preparedStatement.setString(4, board.created);
+
+	         int finalResult = preparedStatement.executeUpdate();
+
+	         if (finalResult < 1) {
+	            preparedStatement.close();
+	            connection.close();
+	            return false;
+	         }
+	         preparedStatement.close();
+	         connection.close();
+	         return true;
+	         // close
+	      } catch (ClassNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	      return true;
+	   }
+
+	public Board boardContentDatail(int contentsIdx) {
+		Board resultData = new Board();
 		try {
 			// open
 			Connection connection = null;
@@ -204,62 +369,20 @@ public class UserDB {
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 
 			// use
-			String query = "SELECT * FROM board";
+			String query = "SELECT * FROM board where idx=" + contentsIdx;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			while (resultSet.next()) {
-				int idx = resultSet.getInt("idx");
-				String user_title = resultSet.getString("user_title");
-				System.out.println("타이틀만 보기 : " + user_title);
-				String user_content = resultSet.getString("user_content");
-				String user_nickname = resultSet.getString("user_nickname");
-				String created = resultSet.getString("created");
-				resultString = resultString + "<tr>";
-				resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'><a href='#'>"
-						+ user_title + "</a></td><td class='name'>" + user_nickname + "</td><td class='date'>" + created
-						+ "</td>";
-				resultString = resultString + "</tr>";
-			}
-
-			// close
-			preparedStatement.close();
-			connection.close();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return resultString;
-	}
-
-	// 게시판 닉네임 가져오기
-	public String nicknameSelect(SignupUser user) {
-		System.out.println("오류1");
-		System.out.println(user.id);
-		String user_nickname = "";
-		try {
-			// open
-			Connection connection = null;
-			Statement statement = null;
-			ResultSet resultset = null;
-
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
-
-			String query = "SELECT user_nickname FROM users WHERE user_id ='" + user.id + "'"; // 닉네임 가져오기
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				user_nickname = resultSet.getString("user_nickname");
+				resultData.idx = resultSet.getInt("idx");
+				resultData.user_title = resultSet.getString("user_title");
+				resultData.user_nickname = resultSet.getString("user_nickname");
+				resultData.user_content = resultSet.getString("user_content");
+				resultData.created = resultSet.getString("created");
 			}
-			System.out.println("오류2" + user_nickname);
+			// close
 			preparedStatement.close();
 			connection.close();
-			return user_nickname;
-			// close
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -267,13 +390,11 @@ public class UserDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return user_nickname;
+		return resultData;
 	}
 
-	public boolean boardInsert(Board board) {
-		System.out.println("게시판 : " + board.user_title);
-		System.out.println("게시판내용 : " + board.user_content);
-		System.out.println("글쓴이 : " + board.user_nickname);
+	// 자유게시판 update
+	public boolean boardUpdate(Board board) {
 		try {
 			// open
 			Connection connection = null;
@@ -282,14 +403,76 @@ public class UserDB {
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
-
-			String fieldString = "idx, user_title, user_content, user_nickname, created";
-			String query = "INSERT INTO board (" + fieldString + ") VALUES (board_idx.NEXTVAL, ?, ?, ?, ?)";
+			// use
+			String query = "UPDATE board SET user_title=?, user_content=? WHERE idx=" + board.idx;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, board.user_title);
 			preparedStatement.setString(2, board.user_content);
-			preparedStatement.setString(3, board.user_nickname);
-			preparedStatement.setString(4, board.created);
+			int result = preparedStatement.executeUpdate();
+			if (result < 1) {
+				return false;
+			}
+			preparedStatement.close();
+
+			// close
+			connection.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	// 자유게시판 update
+	public boolean boardDelete(int idx) {
+		try {
+			// open
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+			// use
+			String query = "DELETE FROM board WHERE idx=" + idx;
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			int result = preparedStatement.executeUpdate();
+			if (result < 1) {
+				preparedStatement.close();
+				connection.close();
+				return false;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	// Q&A 유저 질문 등록
+	public boolean questionInsert(Question question) {
+		System.out.println("Q&A 제목: " + question.question_title);
+		System.out.println("작성자: " + question.user_id);
+		System.out.println("Q&A 내용 : " + question.question_content);
+		try {
+			// open
+			Connection connection = null;
+			Statement statement = null;
+			ResultSet resultset = null;
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+			String fieldString = "idx, question_title, user_id, question_content, created";
+			String query = "INSERT INTO question (" + fieldString + ") VALUES (question_idx.NEXTVAL, ?, ?, ?, ?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, question.question_title);
+			preparedStatement.setString(2, question.user_id);
+			preparedStatement.setString(3, question.question_content);
+			preparedStatement.setString(4, question.created);
 
 			int finalResult = preparedStatement.executeUpdate();
 
@@ -311,5 +494,47 @@ public class UserDB {
 		}
 		return true;
 	}
+	
+	// 유저 게임 score
+		public String userScore(String userId) {
+			try {
+				// open
+				Connection connection = null;
+				Statement statement = null;
+				ResultSet resultSet = null;
+				
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+				String query1 = "SELECT user_nickName FROM users WHERE user_id ='" + userId + "'"; // 닉네임 가져오기
+				PreparedStatement preparedStatement = connection.prepareStatement(query1);
+				ResultSet resultSet1 = preparedStatement.executeQuery();
+				String user_nickName = "";
+				if (resultSet1.next()) {
+					user_nickName = resultSet1.getString("user_nickName");
+				}
+				
+				String query2 = "SELECT * FROM ranking WHERE nickname=" + "'" + user_nickName + "'";
+				preparedStatement = connection.prepareStatement(query2);
+				ResultSet resultSet2 = preparedStatement.executeQuery();
+				if (resultSet2.next()) {
+					
+				} else {
+					String query3 = "INSERT INTO ranking (idx, nickname, score)" + "VALUES (ranking_idx.nextval, '" + user_nickName + "', 0)"; // ranking에 닉, score = 0 추가
+					Statement statement1 = connection.createStatement();
+					int result = statement1.executeUpdate(query3); // executeUpdate는 결과값만 나옴 (update, insert에 사용!)
+					statement1.close();
+				}
+				preparedStatement.close();
+				connection.close();
+				
+				return user_nickName;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "ERROR";
+			}
+		}
+
 
 }

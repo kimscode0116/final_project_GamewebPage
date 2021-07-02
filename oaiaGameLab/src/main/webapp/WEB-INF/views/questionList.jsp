@@ -52,7 +52,7 @@
 	</header>
 	<main>
 		<div class="wrapper">
-			<span class="mainTitle"> <a href="boardList"> <img
+			<span class="mainTitle"> <a href="questionList"> <img
 					src="./resources/image/talktoTalk_title2.png"></a>
 			</span>
 			<div class="content">
@@ -64,21 +64,64 @@
 						<caption>
 							<a>Talk to talk</a>
 						</caption>
+						<!-- 		<colgroup>
+							<col width="10%" />
+							<col width="45%" />
+							<col width="20%" />
+							<col width="20%" />
+						</colgroup> -->
 						<thead>
 							<tr>
 								<th class="idx">글번호</th>
 								<th>제목</th>
 								<th class="name">글쓴이</th>
 								<th class="date">작성일</th>
+								<th class="answer">답변 유무</th>
 							</tr>
 						</thead>
-						<tbody>${boardList_admin}${boardList_user}
+						 <tbody>${questionList} 
 						</tbody>
+						<!-- <tbody>
+							<tr>
+								<td class="idx">1</td>
+								<td class="title"><a href="#">왜 저만 게임에서 지는건가요?ㅜㅜ아니 다
+										부시고싶네요</a></td>
+								<td class="name">김글쓴이</td>
+								<td class="date">2021/07/01</td>
+							</tr>
+							<tr>
+								<td class="idx">2</td>
+								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
+										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
+								<td class="name">박글쓴이</td>
+								<td class="date">2021/07/01</td>
+							</tr>
+							<tr>
+								<td class="idx">3</td>
+								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
+										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
+								<td class="name">최글쓴이</td>
+								<td class="date">2021/07/01</td>
+							</tr>
+							<tr>
+								<td class="idx">3</td>
+								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
+										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
+								<td class="name">최글쓴이</td>
+								<td class="date">2021/07/01</td>
+							</tr>
+							<tr>
+								<td class="idx">3</td>
+								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
+										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
+								<td class="name">최글쓴이</td>
+								<td class="date">2021/07/01</td>
+							</tr>
+						</tbody> -->
 					</table>
-					<tr>
-						<td class="insertBtn"><div class="boardInsertBtn">
-								<a href="boardInsert">글쓰기</a>
-							</div></td>
+					<tr >
+						<td class="insertBtn"><div class="boardInsertBtn"> <a
+								href="questionInsert">글쓰기</a></div></td>
 					</tr>
 					<tr>
 						<td colspan="6">
