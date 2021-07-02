@@ -232,12 +232,6 @@ main1 {
 	background-position: 50% 80%;
 }
 
-.page {
-	width: auto;
-	display: flex;
-	justify-content: center;
-}
-
 .color-bg-start {
 	background-color: black;
 }
@@ -254,6 +248,16 @@ keyframes random-bg {from { filter:hue-rotate(0);
 
 to {
 	filter: hue-rotate(360deg);
+}
+
+.page {
+	width: auto;
+	display: fixed;
+	justify-content: center;
+	background: white;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 }

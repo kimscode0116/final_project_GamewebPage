@@ -60,7 +60,7 @@
 				<h2>WRITE HERE</h2>
 				</div>
 				<section class="data_insert">
-					<form action="insert_action" method="POST" class="totalForm">
+					<form action="boardInsert_action" method="POST" class="totalForm">
 						<table width="100%">
 							<tr height="1" bgcolor="#dddddd">
 								<td colspan="8"></td>
@@ -72,7 +72,7 @@
 						
 
 							<tr>
-								<td><input type="text" name="user_id" value="${user_id}" class="default"
+								<td><input type="text" name="user_nickname" value="${user_nickname}" class="default"
 									readonly></td>
 							</tr>
 

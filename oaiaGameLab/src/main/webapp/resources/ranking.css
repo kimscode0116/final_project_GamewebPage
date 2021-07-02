@@ -1,9 +1,15 @@
 @import
 	url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Sunflower:wght@300&display=swap')
 	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gugi&display=swap')
+	;
 /* 폰트 사용시 여기서 복사
 font-family: 'Nanum Myeongjo', serif;
 font-family: 'Sunflower', sans-serif;
+font-family: 'Black Han Sans', sans-serif;
+font-family: 'Gugi', cursive;
  */
 html {
 	height: 100%;
@@ -171,7 +177,7 @@ li a:hover {
 
 .wrap {
 	width: 100%;
-	height: 800px;
+	height: auto;
 }
 
 .rankingPng {
@@ -181,45 +187,66 @@ li a:hover {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	margin-bottom: 50px;
+	margin-bottom: 100px;
+	
 }
 
 .rankingPng img {
 	width: 100%;
-	margin-bottom: 150px;
+	margin-bottom: 100px;
 }
 
-.ranking123 {
-	width: 1000px;
-	height: 200px;
-	background: red;
+.rankbanner img {
+	width: 100%;
+	opacity: 1;
+}
+
+.rankingWrap {
+	width: 900px;
+	height: 100px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-}
-.ranking123 .title123 {
-	background:yellow;
-}
-
-.ranking123 tr {
-	/* 	padding: 0 0 3px 0;
- */
-	margin: 0;
-	padding-left: 10px;
+	font-size: 40px;
+	color: white;
+	font-family: 'Gugi', cursive;
+	margin-bottom: 100px;
 }
 
-.ranking123 .raning1 {
-	font-size: 30px;
+.rankingWrap .ranking1 {
+	height: 100%;
+	float: left;
+	width: 33%;
+	text-align: center;
+}
+
+.rankingWrap .ranking1 span {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
 }
 
 .allranking {
-	margin-left: auto;
-	margin-right: auto;
-	font-size: 20px;
-	text-align: center;
-	font-family: 'Nanum Myeongjo', serif;
+	width: 800px;
+	/* 	background: white;
+	opacity: 0.5; */
+	margin-top: 50px;
 	color: white;
-	margin-top: 100px;
+	text-align: center;
+	margin-bottom: 200px;
+}
+
+.allranking td {
+	height: 60px;
+	margin-top: 50px;
+	font-size: 25px;
+	color: white;
+	font-weight: 600;
+}
+
+.allranking th {
+	width: 33%;
 }
 
 /* add animation to bg color  */

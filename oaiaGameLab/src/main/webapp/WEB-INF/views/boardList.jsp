@@ -78,9 +78,9 @@
 								<th class="date">작성일</th>
 							</tr>
 						</thead>
-						<%-- <tbody>${boardList }
-						</tbody> --%>
-						<tbody>
+						 <tbody>${boardList}
+						</tbody>
+						<!-- <tbody>
 							<tr>
 								<td class="idx">1</td>
 								<td class="title"><a href="#">왜 저만 게임에서 지는건가요?ㅜㅜ아니 다
@@ -116,7 +116,7 @@
 								<td class="name">최글쓴이</td>
 								<td class="date">2021/07/01</td>
 							</tr>
-						</tbody>
+						</tbody> -->
 					</table>
 					<tr >
 						<td class="insertBtn"><div class="boardInsertBtn"> <a

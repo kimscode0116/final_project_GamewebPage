@@ -42,9 +42,8 @@ public class AdminDB {
 			int result3 = statement3.executeUpdate(query3);
 
 			String query4 = "CREATE TABLE board(" + " idx NUMBER(5) PRIMARY KEY,"
-					+ " user_title VARCHAR2(4000) NOT NULL," + " user_content VARCHAR2(4000) NOT NULL,"
-					+ " user_idx NUMBER(5)," + " created VARCHAR2(4000) NOT NULL," + " updated VARCHAR2(4000) NOT NULL"
-					+ ")";
+					+ " user_title VARCHAR2(4000) NOT NULL," + " user_nickname VARCHAR2(4000) NOT NULL,"
+					+ " user_content VARCHAR2(4000) NOT NULL," + " created VARCHAR2(4000) NOT NULL" + ")";
 			Statement statement4 = connection.createStatement();
 			int result4 = statement4.executeUpdate(query4);
 
@@ -56,6 +55,7 @@ public class AdminDB {
 			statement2.close();
 			statement3.close();
 			statement4.close();
+			statement5.close();
 			connection.close();
 
 			// close

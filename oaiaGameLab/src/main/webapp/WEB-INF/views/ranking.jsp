@@ -48,7 +48,7 @@
 			</button>
 			<div class="dropdown-content">
 				${userOradmin} <a href="createDB">DB생성</a>
-			</div>
+		순위	</div>
 		</div>
 	</header>
 	<main>
@@ -57,38 +57,16 @@
 				<div class="rankingPng">
 					<img src="./resources/image/ranking123.png">
 				</div>
-				<table class="ranking123">
-					<colgroup>
-						<col width="30%" />
-						<col width="30%" />
-						<col width="30%" />
-					</colgroup>
-					<thead>
-						<tr class="title123">
-							<th class="raning1">1등</th>
-							<th class="raning2">2등</th>
-							<th class="raning3">3등</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="raning1">김씨는 나야</td>
-							<td class="raning2">김씨는 나야</td>
-							<td class="raning3">김씨는 나야</td>
-						</tr>
-						<tr>
-							<td class="raning1">16</td>
-							<td class="raning2">15</td>
-							<td class="raning3">14</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="rankingWrap">${ranking123}</div>
+				<div class="rankbanner">
+					<img src="./resources/image/rankbanner.png">
+				</div>
 				<table class="allranking">
 					<thead>
 						<tr>
-							<th>랭킹</th>
-							<th>닉네임</th>
-							<th>점수</th>
+							<th>RANK</th>
+							<th>USER</th>
+							<th>SCORE</th>
 						</tr>
 					</thead>
 					<tbody>${rankList }

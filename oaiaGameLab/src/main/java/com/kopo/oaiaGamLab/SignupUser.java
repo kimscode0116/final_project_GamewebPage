@@ -43,5 +43,9 @@ public class SignupUser {
 		this.nickname = nickname;
 		this.join_date = join_date;
 	}
+	
+	SignupUser(String id){
+		this.id=id;
+	}
 
 }
