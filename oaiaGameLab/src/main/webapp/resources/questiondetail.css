@@ -1,0 +1,560 @@
+@import
+	url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Sunflower:wght@300&display=swap')
+	;
+/* 폰트 사용시 여기서 복사
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Sunflower', sans-serif;
+ */
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	min-height: 1000px;
+	padding-top: 20px;
+	/* 	background: url("./image/background.jpg");
+	background-size: auto; */
+	background: url("https://i.gifer.com/IrM.gif");
+	background-size: auto;
+}
+
+header {
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 35px;
+	padding: 1rem;
+	color: white;
+	background: #292c2f;
+	opacity: 0.8;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo {
+	width: 20%;
+}
+
+.idspace {
+	width: 50px;
+	margin: auto;
+}
+
+span a img {
+	width: 50%;
+}
+
+nav {
+	font-size: 12pt;
+	font-family: 'PT Sans', Arial, Sans-serif;
+	position: relative;
+	text-align: center;
+}
+
+nav li {
+	/* 메뉴바에 각 칸마다 색깔 넣으려면 여기 */
+	/* background: black; */
+	padding-right: 10px;
+	display: inline-block;
+	text-align: center;
+	margin: auto;
+}
+
+.menubar {
+	/* background: yellow; */
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+nav .menubar a:hover, nav a:active {
+	color: #FFD400;
+}
+
+nav a#pull {
+	display: none;
+}
+
+li {
+	position: relative;
+	display: inline-block;
+}
+
+.menubar li a {
+	color: #FFFFFF;
+	text-align: center;
+	padding: 14.5px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	color: #FFD400;
+	font-weight: normal;
+}
+
+.dropdown {
+	float: left;
+	overflow: hidden;
+	padding-left: 130px;
+}
+
+.dropdown .dropbtn {
+	font-size: 20px;
+	border: none;
+	outline: none;
+	color: white;
+	padding: 14px 16px;
+	background-color: inherit;
+	font-family: inherit;
+	margin: 0;
+}
+
+.dropdown .dropbtn a {
+	float: left;
+	width: 20%;
+	text-align: center;
+	padding: 12px 0;
+	transition: all 0.3s ease;
+	color: white;
+	font-size: 36px;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	text-alin: center;
+	font-family: 'Nanum Myeongjo', serif;
+}
+
+.dropdown-content a {
+	float: none;
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	font-family: 'Nanum Myeongjo', serif;
+}
+
+.dropdown-content a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+/* <main page> */
+/* 여기서 부
+----------------------------------
+----------------------------------
+----------------------------------
+----------------------------------
+----------------------------------
+----------------------------------
+터 본문 */
+.wrap {
+	width: 60%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0 1px 0 2px gray;
+}
+
+.contents caption {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 30px;
+	width: 100%;
+	height: 50px;
+	font-size: 20px;
+	color: black;
+	background: white;
+	text-align: center;
+	float: inherit;
+	font-family: 'Sunflower', sans-serif;
+}
+
+.contents caption a {
+	font-family: 'Sunflower', sans-serif;
+}
+
+.wrapper {
+	width: 1150px;
+	height: 100%;
+	position: relative;
+	display: block;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 50px;
+}
+
+.content {
+	width: 1000px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 20px 10px 20px;
+}
+
+.mainTitle {
+	width: 100%;
+	height: auto;
+	min-height: 600px;
+	margin-top: 10px;
+}
+
+.mainTitle img {
+	width: 1000px;
+	height: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.contents, .contents th, .contents td {
+	border: 0;
+	table-layout: flex;
+}
+
+.contents {
+	width: 100%;
+	border-top: none;
+	border-bottom: none;
+	color: white;
+	font-weight: bold;
+	line-height: 20px;
+	vertical-align: top;
+	font-family: 'Nanum Myeongjo', serif;
+	margin-bottom: 20px;
+}
+
+.contents .title {
+	width: 100%;
+	height: 70px;
+	font-size: 40px;
+}
+
+.contents .nickname {
+	width: 100%;
+	height: 50px;
+	font-size: 20px;
+}
+
+tbody {
+	width: 100%;
+	color: white;
+}
+
+.contents th {
+	padding: 5px 0 6px;
+	color: white;
+	font-weight: bold;
+	line-height: 20px;
+	vertical-align: center;
+	text-align: center;
+	border-right: 1px solid white;
+	width: 20%;
+	font-weight: bold;
+}
+
+.contents td {
+	padding: 8px 0 9px 20px;
+	color: white;
+	line-height: 18px;
+	text-align: left;
+	border-bottom: 1px solid white;
+}
+
+.contents .upper td {
+	border-bottom: 1px solid white;
+}
+
+.contents .bottom {
+	height: 300px;
+}
+
+.bottom td {
+	vertical-align: top;
+	padding: 30px 0 9px 20px;
+	font-size: 20px;
+}
+
+.adminAnswer {
+	width: 60%;
+	height: 200px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.adminAnswer .adminTitle {
+	width: 100%;
+	height: 60px;
+	/* 	background: white;
+ */
+	color: white;
+	padding-top: 10px;
+	padding-left: 20px;
+	/* 	border: 1px solie white;
+ */
+	text-align: center;
+}
+
+.adminAnswer .admintContent {
+	width: 100%;
+	height: 70px;
+	/* 	padding: 30px 10px 10px 10px;
+ */
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	background: white;
+	color: black;
+}
+
+textarea {
+	width: 100%;
+	height: 100px;
+	padding: 30px 10px 10px 10px;
+	background: white;
+	color: black;
+}
+
+.btnArea .insertBtn {
+	width: 100%;
+	height: auto;
+}
+
+.btnArea .insertBtn .submit_btn {
+	width: 50%;
+	height: 35px;
+	background: white;
+	/*  border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px */
+	border-radius: 10px;
+}
+
+.boardInsertBtn {
+	float: center;
+	width: 300px;
+	height: auto;
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.boardInsertBtn a {
+	color: black;
+	text-decoration: none;
+	font-size: 20px;
+	margin: .25rem;
+	padding: .5rem 1rem;
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+	background: teal;
+	text-align: center;
+	font-family: 'Nanum Myeongjo', serif;
+}
+
+.boardInsertBtn a:hover {
+	background: yellowgreen;
+}
+
+/* add animation to bg color  */
+@
+keyframes random-bg {from { filter:hue-rotate(0);
+	
+}
+
+to {
+	filter: hue-rotate(360deg);
+}
+
+}
+.fun-btn {
+	width: 500px;
+	min-height: 100px;
+	/* change bg color to get different hues    */
+	background: rgb(63, 94, 251);
+	background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%,
+		rgba(252, 70, 107, 1) 100%);
+	color: white;
+	padding: 0.4em 0.4em;
+	opacity: 0.8;
+	/* padding-top: 1em; */
+	border: none;
+	transition: all .3s ease;
+	border-radius: 5px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	outline: none;
+	align-self: center;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 30px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fun-btn:hover {
+	animation: random-bg .5s linear infinite, grow 1300ms ease infinite;
+}
+
+.start-fun {
+	background-color: #fff !important;
+	/* change color of button text when fun is started   */
+	color: salmon !important;
+}
+
+/*
+
+<footer-page>
+
+ */
+.footer-distributed {
+	/* position:absolute; */
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #292c2f;
+	opacity: 0.8;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: auto;
+	height: 310px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	font: normal 16px sans-serif;
+	padding: 45px 50px;
+}
+
+.footer-distributed .bottomLogo img {
+	width: 50%;
+}
+
+.footer-distributed .bottomLogo {
+	/* background: red; */
+	margin-bottom: 10px;
+}
+
+.footer-distributed .footer-left p {
+	/* background: red; */
+	color: #8f9296;
+	font-size: 14px;
+	margin: 0;
+}
+
+.footer-distributed p.footer-links {
+	/* background: red; */
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffffff;
+	margin: 10px 0 10px 0;
+	padding: 0;
+	transition: ease .25s;
+}
+
+.footer-distributed p.footer-links a {
+	display: inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color: gray;
+	transition: ease .25s;
+}
+
+.footer-distributed .footer-links a:before {
+	content: "·";
+	font-size: 20px;
+	left: 0;
+	color: #fff;
+	display: inline-block;
+	padding-right: 5px;
+	margin: 10px;
+}
+
+.footer-distributed .footer-links .link-1:before {
+	content: none;
+}
+
+.footer-distributed .footer-right {
+	/* float: right; */
+	margin-top: 6px;
+	/* max-width: 180px; */
+}
+
+.footer-distributed .footer-right a {
+	display: inline-block;
+	/* width: 35px;
+  height: 35px; */
+	background-color: #33383b;
+	border-radius: 2px;
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+	margin-left: 3px;
+	transition: all .25s;
+}
+
+.footer-distributed .footer-right a img {
+	width: 30px;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.footer-distributed .footer-right a i {
+	width: 120%;
+	margin: 0;
+	padding: 0;
+}
+
+.footer-distributed .footer-right a:hover {
+	transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+}
+
+.footer-distributed p.footer-links a:hover {
+	color: #FFD400;
+	/* text-decoration:underline; */
+}
+
+.snsLogo p {
+	color: lightgray;
+	/* background: red; */
+	margin-top: 15px;
+	margin-bottom: auto;
+}
+
+/* 버튼 */
+.btn_area {
+	margin: 30px 0 91px;
+}
+
+#signupBtn {
+	width: 100%;
+	padding: 21px 0 17px;
+	border: 0;
+	cursor: pointer;
+	color: #fff;
+	background-color: #f5c122;
+	font-size: 20px;
+	font-weight: 400;
+	font-family: 'Nanum Myeongjo', serif;
+}
