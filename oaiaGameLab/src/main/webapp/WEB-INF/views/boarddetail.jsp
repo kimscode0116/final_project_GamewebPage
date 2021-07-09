@@ -32,7 +32,7 @@
 					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
-					<li><a href="question">Q&A</a></li>
+					<li><a href="questionList">Q&A</a></li>
 				</span>
 			</ul>
 		</nav>
@@ -41,7 +41,8 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				${userOradmin} <a href="createDB">DB생성</a>
+				${userOradmin} 
+				<!-- <a href="createDB">DB생성</a> -->
 			</div>
 		</div>
 	</header>
@@ -50,43 +51,62 @@
 			<span class="mainTitle"> <a href="boardList"> <img
 					src="./resources/image/talktoTalk_title2.png"></a>
 			</span>
-			<div class="content">
-				<section class="wrap">
+			<div class="insertBtn">
+				<div class="boardInsertBtn">
+					<a href="update?idx=${idx}&user_id=${user_id}">수정하기</a>
+					<a href="delete?user_id=${user_id}&idx=${idx}">삭제하기</a>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<section class="wrap">
+				<div class="btnArea">
 					<table class="contents">
+						<caption>
+							<i class="fas fa-fire-alt"></br></i> <a>${user_title}</span></a>
+						</caption>
 						<tbody>
-							<tr class="upper">
-								<th>게시물번호</th>
-								<td><span type="text" name="idx" value="${idx}">${idx }</span></td>
+							<tr class="idx">
+								<td><span type="text" name="idx" value="${idx}"><i
+										class="fas fa-circle"> ${idx }</span></td>
 							</tr>
-							<tr class="upper">
-								<th>제목</th>
-								<td><span type="text" name="user_title"
-									value="${user_title}">${user_title}</span></td>
+							<tr class="nickname">
+								<td><span type="text" name="user_id"
+									value="${user_id}"><i class="fas fa-ghost">
+											${user_id}</span></td>
 							</tr>
-							<tr class="upper">
-								<th>작성자</th>
-								<td><span type="text" name="user_nickname"
-									value="${user_nickname}">${user_nickname}</span></td>
-
-							</tr>
-							<tr class="upper">
-								<th>작성시간</th>
-								<td><span type="text" name="created" value="${created}">${created}</span></td>
+							<tr class="created">
+								<td><span type="text" name="created" value="${created}"><i
+										class="fas fa-clock"> ${created}</span></td>
 							</tr>
 							<tr class="bottom">
-								<th>내용</th>
 								<td><span type="text" name="user_content"
 									value="${user_content}">${user_content}</span></td>
 							</tr>
 						</tbody>
 					</table>
-				</section>
+			</section>
+			<div class="comments">
+				<table class="contents_comment">
+					<tbody>
+						${commentsList }
+						<%-- <tr class="nickname">
+							<td><span type="text" name="user_nickname" ><i class="fas fa-ghost"></i>
+										${user_nickname} : 댓글 내용이 뭐지 댓글 내용이 뭐지 뭐지뭐지뭐지 댓글 내용이 뭐지 댓글 내용이 뭐지 </span><a href="#">   댓글삭제</a></td>
+						</tr> --%>
+					</tbody>
+				</table>
+				<form action="boardComments_action" method="POST" class="totalForm">
+					<div class="comments_by_user">
+						<hr>
+						<input type="hidden" name="idx" value="${idx}"> <input
+							name="comments" placeholder="댓글을 입력하세요"></input> <input
+							type="submit" value="update" class="submit_btn"></span>
+					</div>
+				</form>
 			</div>
-			<tr class="btnArea">
-				<td class="insertBtn"><div class="boardInsertBtn">
-						<a href='update?idx=${idx}'>수정하기</a><a href="delete?user_nickname='${user_nickname}'&idx=${idx}">삭제하기</a>
-					</div></td>
-			</tr>
+		</div>
+
 		</div>
 	</main>
 	<footer class="footer-distributed">
@@ -96,16 +116,20 @@
 			</div>
 			<div class="footer-left">
 				<p class="footer-links">
-					<a class="link-1" href="#">Home</a> <a href="#">Blog</a> <a
-						href="#">About</a> <a href="#">Contact Us</a>
+					<a class="link-1" href="#">Home</a> <a href="Aboutus">About</a> <a href="contactus">Contact Us</a>
+
 				</p>
 			</div>
 			<div class="footer-right">
 
-				<a href="#"><img src="./resources/image/fb.png"></a> <a
-					href="#"><img src="./resources/image/is.png"></a> <a href="#"><img
-					src="./resources/image/GitHub_Logo.png"></a> <a href="#"><img
-					src="./resources/image/mail.png"></a>
+				<a href="https://www.instagram.com/kkeehhh"><img
+					src="./resources/image/is.png"></a> <a
+					href="https://www.instagram.com/go_soojin_"><img
+					src="./resources/image/is2.png"></a> <a
+					href="https://github.com/0seony"><img
+					src="./resources/image/GitHub_Logo.png"></a> <a
+					href="https://github.com/dudpray0220"><img
+					src="./resources/image/GitHub_Logo2.png"></a>
 
 			</div>
 			<div class="snsLogo">

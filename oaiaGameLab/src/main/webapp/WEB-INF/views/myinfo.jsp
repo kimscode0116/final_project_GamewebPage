@@ -34,7 +34,7 @@
 					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
-					<li><a href="question">Q&A</a></li>
+					<li><a href="questionList">Q&A</a></li>
 				</span>
 			</ul>
 		</nav>
@@ -43,8 +43,8 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				<a href="logout">로그아웃</a><a href="myinfo_pwd">개인정보수정</a> <a
-					href="createDB">DB생성</a>
+				<a href="logout">로그아웃</a><a href="myinfo_pwd">개인정보수정</a> 
+				<!-- <a href="createDB">DB생성</a> -->
 			</div>
 		</div>
 	</header>
@@ -133,16 +133,20 @@
 			</div>
 			<div class="footer-left">
 				<p class="footer-links">
-					<a class="link-1" href="#">Home</a> <a href="#">Blog</a> <a
-						href="#">About</a> <a href="#">Contact Us</a>
+					<a class="link-1" href="#">Home</a> <a href="Aboutus">About</a> <a href="contactus">Contact Us</a>
+
 				</p>
 			</div>
 			<div class="footer-right">
 
-				<a href="#"><img src="./resources/image/fb.png"></a> <a
-					href="#"><img src="./resources/image/is.png"></a> <a href="#"><img
-					src="./resources/image/GitHub_Logo.png"></a> <a href="#"><img
-					src="./resources/image/mail.png"></a>
+				<a href="https://www.instagram.com/kkeehhh"><img
+					src="./resources/image/is.png"></a> <a
+					href="https://www.instagram.com/go_soojin_"><img
+					src="./resources/image/is2.png"></a> <a
+					href="https://github.com/0seony"><img
+					src="./resources/image/GitHub_Logo.png"></a> <a
+					href="https://github.com/dudpray0220"><img
+					src="./resources/image/GitHub_Logo2.png"></a>
 
 			</div>
 			<div class="snsLogo">

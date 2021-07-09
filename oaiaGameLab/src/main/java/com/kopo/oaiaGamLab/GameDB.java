@@ -61,7 +61,7 @@ public class GameDB {
 				connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 
 				// use
-				String query = "SELECT * FROM ranking WHERE rownum<=3 order by score desc";
+				String query = "select * from (select * from ranking order by score desc) where rownum <= 3";
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				ResultSet resultSet = preparedStatement.executeQuery();
 

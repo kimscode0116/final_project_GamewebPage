@@ -24,55 +24,65 @@ public class AdminDB {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
 
-			// 쿼리문 입력하세요 (원하는거 정의)
-			String query = "CREATE TABLE users(" + " idx NUMBER(5) PRIMARY KEY," + " user_id VARCHAR2(1000) NOT NULL,"
-					+ " user_pwd VARCHAR(4000) NOT NULL," + " user_name VARCHAR2(1000) NOT NULL,"
-					+ " user_birth VARCHAR2(1000) NOT NULL," + " user_email VARCHAR2(1000),"
-					+ " user_nickName VARCHAR2(1000) NOT NULL," + " join_date VARCHAR2(1000)" + ")";
-			statement = connection.createStatement();
-			int result = statement.executeUpdate(query);
+	         // 쿼리문 입력하세요 (원하는거 정의)
+	         String query = "CREATE TABLE users(" + " idx NUMBER(5) PRIMARY KEY," + " user_id VARCHAR2(4000) NOT NULL,"
+	               + " user_pwd VARCHAR2(4000) NOT NULL," + " user_name VARCHAR2(4000) NOT NULL,"
+	               + " user_birth VARCHAR2(4000) NOT NULL," + " user_email VARCHAR2(4000),"
+	               + " user_nickName VARCHAR2(4000) NOT NULL," + " join_date VARCHAR2(4000)" + ")";
+	         statement = connection.createStatement();
+	         int result = statement.executeUpdate(query);
 
-			String query2 = "CREATE SEQUENCE users_idx INCREMENT BY 1 START WITH 1";
-			Statement statement2 = connection.createStatement();
-			int result2 = statement2.executeUpdate(query2);
+	         String query2 = "CREATE SEQUENCE users_idx INCREMENT BY 1 START WITH 1";
+	         Statement statement2 = connection.createStatement();
+	         int result2 = statement2.executeUpdate(query2);
 
-			String query3 = "CREATE TABLE admins(" + " idx NUMBER(5) PRIMARY KEY," + " admin_id VARCHAR2(50),"
-					+ " admin_pwd VARCHAR(50)," + " admin_name VARCHAR2(50)" + ")";
-			Statement statement3 = connection.createStatement();
-			int result3 = statement3.executeUpdate(query3);
+	         String query3 = "CREATE TABLE admins(" + " idx NUMBER(5) PRIMARY KEY," + " admin_id VARCHAR2(4000),"
+	               + " admin_pwd VARCHAR(4000)," + " admin_name VARCHAR2(4000)" + ")";
+	         Statement statement3 = connection.createStatement();
+	         int result3 = statement3.executeUpdate(query3);
 
-			String query4 = "CREATE TABLE board(" + " idx NUMBER(5) PRIMARY KEY,"
-					+ " user_title VARCHAR2(4000) NOT NULL," + " user_nickname VARCHAR2(4000) NOT NULL,"
-					+ " user_content VARCHAR2(4000) NOT NULL," + " created VARCHAR2(4000) NOT NULL" + ")";
-			Statement statement4 = connection.createStatement();
-			int result4 = statement4.executeUpdate(query4);
+	         String query4 = "CREATE TABLE board(" + " idx NUMBER(5) PRIMARY KEY,"
+	               + " user_title VARCHAR2(4000) NOT NULL," + " user_id VARCHAR2(4000) NOT NULL,"
+	               + " user_content VARCHAR2(4000) NOT NULL," + " created VARCHAR2(4000) NOT NULL" + ")";
+	         Statement statement4 = connection.createStatement();
+	         int result4 = statement4.executeUpdate(query4);
 
-			String query5 = "CREATE SEQUENCE board_idx INCREMENT BY 1 START WITH 1";
-			Statement statement5 = connection.createStatement();
-			int result5 = statement4.executeUpdate(query5);
+	         String query5 = "CREATE SEQUENCE board_idx INCREMENT BY 1 START WITH 1";
+	         Statement statement5 = connection.createStatement();
+	         int result5 = statement4.executeUpdate(query5);
 
-			String query6 = "CREATE TABLE question(" + " idx NUMBER(5) PRIMARY KEY,"
-					+ " question_title VARCHAR2(4000) NOT NULL," + " user_id VARCHAR2(4000) NOT NULL,"
-					+ " question_content VARCHAR2(4000) NOT NULL," + " created VARCHAR2(4000) NOT NULL,"
-					+ " answer VARCHAR2(4000)" + ")";
-			Statement statement6 = connection.createStatement();
-			int result6 = statement6.executeUpdate(query6);
+	         String query6 = "CREATE TABLE question(" + " idx NUMBER(5) PRIMARY KEY,"
+	               + " question_title VARCHAR2(4000) NOT NULL," + " user_id VARCHAR2(4000) NOT NULL,"
+	               + " question_content VARCHAR2(4000) NOT NULL," + " created VARCHAR2(4000) NOT NULL,"
+	               + " answer VARCHAR2(4000)" + ")";
+	         Statement statement6 = connection.createStatement();
+	         int result6 = statement6.executeUpdate(query6);
 
-			String query7 = "CREATE SEQUENCE question_idx INCREMENT BY 1 START WITH 1";
-			Statement statement7 = connection.createStatement();
-			int result7 = statement7.executeUpdate(query7);
-			
-			String query8 = "CREATE TABLE ranking("
-					+ " idx NUMBER(5) PRIMARY KEY,"
-					+ " nickname VARCHAR2(4000) NOT NULL,"
-					+ " score NUMBER"
-					+ ")";
-			Statement statement8 = connection.createStatement();
-			int result8 = statement8.executeUpdate(query8);
-			
-			String query9 = "CREATE SEQUENCE ranking_idx INCREMENT BY 1 START WITH 1";
-			Statement statement9 = connection.createStatement();
-			int result9 = statement9.executeUpdate(query9);
+	         String query7 = "CREATE SEQUENCE question_idx INCREMENT BY 1 START WITH 1";
+	         Statement statement7 = connection.createStatement();
+	         int result7 = statement7.executeUpdate(query7);
+	         
+	         String query8 = "CREATE TABLE ranking("
+	               + " idx NUMBER(5) PRIMARY KEY,"
+	               + " nickname VARCHAR2(4000) NOT NULL,"
+	               + " score NUMBER(5)"
+	               + ")";
+	         Statement statement8 = connection.createStatement();
+	         int result8 = statement8.executeUpdate(query8);
+	         
+	         String query9 = "CREATE SEQUENCE ranking_idx INCREMENT BY 1 START WITH 1";
+	         Statement statement9 = connection.createStatement();
+	         int result9 = statement9.executeUpdate(query9);
+	         
+	         String query10 = "CREATE TABLE COMMENTS(" + " idx NUMBER(5) PRIMARY KEY,"
+	                     + " user_id VARCHAR2(4000) NOT NULL," + " comments VARCHAR2(4000) NOT NULL,"
+	                     + " created VARCHAR2(4000) NOT NULL," + " board_idx NUMBER(5) NOT NULL" + ")";
+	            Statement statement10 = connection.createStatement();
+	            int result10 = statement10.executeUpdate(query10);
+	               
+	            String query11 = "CREATE SEQUENCE comments_idx INCREMENT BY 1 START WITH 1";
+	            Statement statement11 = connection.createStatement();
+	            int result11 = statement11.executeUpdate(query11);
 
 			statement.close();
 			statement2.close();
@@ -83,6 +93,8 @@ public class AdminDB {
 			statement7.close();
 			statement8.close();
 			statement9.close();
+			statement10.close();
+			statement11.close();
 			connection.close();
 
 			// close
@@ -304,9 +316,138 @@ public class AdminDB {
 		return resultString;
 	}
 
-	// Q&A 리스트 조회
-	public String selectQuestion() { // 관리자 권한 - 전체 Q&A 조회
-		String resultString = "";
+	   // Q&A 리스트 조회
+	   public String selectQuestion() { // 관리자 권한 - 전체 Q&A 조회
+	      String resultString = "";
+	      try {
+	         // open
+	         Connection connection = null;
+	         Statement statement = null;
+	         ResultSet resultset = null;
+
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	         // use
+	         String query = "SELECT IDX, QUESTION_TITLE, USER_ID, QUESTION_CONTENT, CREATED, CASE WHEN ANSWER IS NOT NULL THEN 'O' ELSE 'X' END AS answer FROM QUESTION";
+	         PreparedStatement preparedStatement = connection.prepareStatement(query);
+	         ResultSet resultSet = preparedStatement.executeQuery();
+
+	         while (resultSet.next()) {
+	            int idx = resultSet.getInt("idx");
+	            String question_title = resultSet.getString("question_title");
+	            String user_id = resultSet.getString("user_id");
+	            String created = resultSet.getString("created");
+	            String answer = resultSet.getString("answer");
+	            resultString = resultString + "<tr>";
+	            resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'><a href='questionupdate?idx="+idx+"'>" + question_title
+	                  + "</td><td class='id'>" + user_id + "</td><td class='created'>" + created
+	                  + "</td><td class='answer'>" + answer + "</td>";
+	            resultString = resultString + "</tr>";
+	         }
+
+	         // close
+	         preparedStatement.close();
+	         connection.close();
+	      } catch (ClassNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	      return resultString;
+	   }
+	   
+	   // Q&A 리스트 조회 _ 답변 완료
+	      public String answerYes() {
+	         String resultString = "";
+	         try {
+	            // open
+	            Connection connection = null;
+	            Statement statement = null;
+	            ResultSet resultset = null;
+
+	            Class.forName("oracle.jdbc.driver.OracleDriver");
+	            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	            // use
+	            String query = "SELECT IDX, QUESTION_TITLE, USER_ID, QUESTION_CONTENT, CREATED, CASE WHEN ANSWER IS NOT NULL THEN 'O' END AS answer FROM QUESTION WHERE ANSWER IS NOT NULL";
+	            PreparedStatement preparedStatement = connection.prepareStatement(query);
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	               int idx = resultSet.getInt("idx");
+	               String question_title = resultSet.getString("question_title");
+	               String user_id = resultSet.getString("user_id");
+	               String created = resultSet.getString("created");
+	               String answer = resultSet.getString("answer");
+	               resultString = resultString + "<tr>";
+	               resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'><a href='questionupdate?idx="+idx+"'>" + question_title
+	                     + "</td><td class='id'>" + user_id + "</td><td class='created'>" + created
+	                     + "</td><td class='answer'>" + answer + "</td>";
+	               resultString = resultString + "</tr>";
+	            }
+
+	            // close
+	            preparedStatement.close();
+	            connection.close();
+	         } catch (ClassNotFoundException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         } catch (SQLException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         return resultString;
+	      }
+	      
+	      // Q&A 리스트 조회 _ 답변 미완료
+	      public String answerNo() {
+	         String resultString = "";
+	         try {
+	            // open
+	            Connection connection = null;
+	            Statement statement = null;
+	            ResultSet resultset = null;
+
+	            Class.forName("oracle.jdbc.driver.OracleDriver");
+	            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
+
+	            // use
+	            String query = "SELECT IDX, QUESTION_TITLE, USER_ID, QUESTION_CONTENT, CREATED, CASE WHEN ANSWER IS NULL THEN 'X' END AS answer FROM QUESTION WHERE ANSWER IS NULL";
+	            PreparedStatement preparedStatement = connection.prepareStatement(query);
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	               int idx = resultSet.getInt("idx");
+	               String question_title = resultSet.getString("question_title");
+	               String user_id = resultSet.getString("user_id");
+	               String created = resultSet.getString("created");
+	               String answer = resultSet.getString("answer");
+	               resultString = resultString + "<tr>";
+	               resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'><a href='questionupdate?idx="+idx+"'>" + question_title
+	                     + "</td><td class='id'>" + user_id + "</td><td class='created'>" + created
+	                     + "</td><td class='answer'>" + answer + "</td>";
+	               resultString = resultString + "</tr>";
+	            }
+
+	            // close
+	            preparedStatement.close();
+	            connection.close();
+	         } catch (ClassNotFoundException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         } catch (SQLException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         return resultString;
+	      }
+	
+	
+	// Q&A update
+	public boolean questionUpdate(Question question) {
 		try {
 			// open
 			Connection connection = null;
@@ -315,38 +456,26 @@ public class AdminDB {
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:XE", "oaiagame", "oaiagame");
-
 			// use
-			String query = "SELECT * FROM question";
+			String query = "UPDATE question SET answer=? WHERE idx=" + question.idx;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			ResultSet resultSet = preparedStatement.executeQuery();
-
-			while (resultSet.next()) {
-				int idx = resultSet.getInt("idx");
-				String question_title = resultSet.getString("question_title");
-				String user_id = resultSet.getString("user_id");
-				String created = resultSet.getString("created");
-				String answer = resultSet.getString("answer");
-				resultString = resultString + "<tr>";
-				resultString = resultString + "<td class='idx'>" + idx + "</td><td class='title'>" + question_title
-						+ "</td><td class='id'>" + user_id + "</td><td class='created'>" + created
-						+ "</td><td class='answer'>" + answer + "</td>";
-				resultString = resultString + "</tr>";
-				System.out.println(resultString);
+			preparedStatement.setString(1, question.answer);
+			int result = preparedStatement.executeUpdate();
+			if (result < 1) {
+				return false;
 			}
+			preparedStatement.close();
 
 			// close
-			preparedStatement.close();
 			connection.close();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		return resultString;
+		return true;
 	}
+	
 	
 	// 관리자 게임 scroe
 		public String adminScore(String adminId) {

@@ -37,7 +37,7 @@
 					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
-					<li><a href="question">Q&A</a></li>
+					<li><a href="questionList">Q&A</a></li>
 				</span>
 			</ul>
 		</nav>
@@ -46,7 +46,7 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				${userOradmin} <a href="createDB">DB생성</a>
+				${userOradmin} <!-- <a href="createDB">DB생성</a> -->
 			</div>
 		</div>
 	</header>
@@ -60,16 +60,17 @@
 				<h2>* 관리자 업데이트 소식</h2>
 				</div> -->
 				<section class="wrap">
+					<div>
+						<div>
+							<div class="insertBtn">
+								<div class="boardInsertBtn">${onlyUser }</div>
+							</div>
+						</div>
+					</div>
 					<table class="sub_news" border="1" cellspacing="0">
 						<caption>
-							<a>Talk to talk</a>
+							<a>Q&A</a>
 						</caption>
-						<!-- 		<colgroup>
-							<col width="10%" />
-							<col width="45%" />
-							<col width="20%" />
-							<col width="20%" />
-						</colgroup> -->
 						<thead>
 							<tr>
 								<th class="idx">글번호</th>
@@ -79,58 +80,10 @@
 								<th class="answer">답변 유무</th>
 							</tr>
 						</thead>
-						 <tbody>${questionList} 
+						<tbody>${question_admin}${question_user }
 						</tbody>
-						<!-- <tbody>
-							<tr>
-								<td class="idx">1</td>
-								<td class="title"><a href="#">왜 저만 게임에서 지는건가요?ㅜㅜ아니 다
-										부시고싶네요</a></td>
-								<td class="name">김글쓴이</td>
-								<td class="date">2021/07/01</td>
-							</tr>
-							<tr>
-								<td class="idx">2</td>
-								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
-										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
-								<td class="name">박글쓴이</td>
-								<td class="date">2021/07/01</td>
-							</tr>
-							<tr>
-								<td class="idx">3</td>
-								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
-										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
-								<td class="name">최글쓴이</td>
-								<td class="date">2021/07/01</td>
-							</tr>
-							<tr>
-								<td class="idx">3</td>
-								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
-										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
-								<td class="name">최글쓴이</td>
-								<td class="date">2021/07/01</td>
-							</tr>
-							<tr>
-								<td class="idx">3</td>
-								<td class="title"><a href="#">아이템 샀는데 ㅡㅡ 이거 구닥이네요
-										구매하지말고 차라리 다른거 구매해요;;; 돈아까워 죽겠음 그리고 계정 주 김글쓴이 사기꾼</a></td>
-								<td class="name">최글쓴이</td>
-								<td class="date">2021/07/01</td>
-							</tr>
-						</tbody> -->
 					</table>
-					<tr >
-						<td class="insertBtn"><div class="boardInsertBtn"> <a
-								href="questionInsert">글쓰기</a></div></td>
-					</tr>
-					<tr>
-						<td colspan="6">
-							<center>
-								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
-									href="#">4</a> <a href="#">다음▶</a>
-							</center>
-						</td>
-					</tr>
+
 				</section>
 			</div>
 		</div>
@@ -142,17 +95,20 @@
 			</div>
 			<div class="footer-left">
 				<p class="footer-links">
-					<a class="link-1" href="#">Home</a> <a href="#">Blog</a> <a
-						href="#">About</a> <a href="#">Contact Us</a>
+					<a class="link-1" href="#">Home</a> <a href="Aboutus">About</a> <a href="contactus">Contact Us</a>
+
 				</p>
 			</div>
 			<div class="footer-right">
 
-				<a href="#"><img src="./resources/image/fb.png"></a> <a
-					href="#"><img src="./resources/image/is.png"></a> <a href="#"><img
-					src="./resources/image/GitHub_Logo.png"></a> <a href="#"><img
-					src="./resources/image/mail.png"></a>
-
+				<a href="https://www.instagram.com/kkeehhh"><img
+					src="./resources/image/is.png"></a> <a
+					href="https://www.instagram.com/go_soojin_"><img
+					src="./resources/image/is2.png"></a> <a
+					href="https://github.com/0seony"><img
+					src="./resources/image/GitHub_Logo.png"></a> <a
+					href="https://github.com/dudpray0220"><img
+					src="./resources/image/GitHub_Logo2.png"></a>
 			</div>
 			<div class="snsLogo">
 				<p>OaiaGameCompany &copy; 2021</p>

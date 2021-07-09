@@ -35,5 +35,17 @@ public class Question {
 		this.created = created;
 		this.answer = answer;
 	}
+	
+	Question(String answer){
+		this.answer = answer;
+	}
+	
+	Question(String question_title, String user_id, String question_content, String answer, int idx) {
+		this.question_title = question_title;
+		this.user_id = user_id;
+		this.question_content = question_content;
+		this.answer = answer;
+		this.idx=idx;
+	}
 
 }

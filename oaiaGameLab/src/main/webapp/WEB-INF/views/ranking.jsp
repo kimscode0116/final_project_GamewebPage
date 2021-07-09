@@ -13,8 +13,8 @@
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen"
-	href="./resources/boardInsert.css">
+<!-- <link rel="stylesheet" type="text/css" media="screen"
+	href="./resources/boardInsert.css"> -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="./resources/ranking.css">
 
@@ -38,7 +38,7 @@
 					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
-					<li><a href="question">Q&A</a></li>
+					<li><a href="questionList">Q&A</a></li>
 				</span>
 			</ul>
 		</nav>
@@ -47,8 +47,8 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				${userOradmin} <a href="createDB">DB생성</a>
-		순위	</div>
+				${userOradmin} <!-- <a href="createDB">DB생성</a> -->
+		</div>
 		</div>
 	</header>
 	<main>
@@ -64,9 +64,9 @@
 				<table class="allranking">
 					<thead>
 						<tr>
-							<th>RANK</th>
-							<th>USER</th>
-							<th>SCORE</th>
+							<th></th>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>${rankList }
@@ -83,16 +83,20 @@
 			</div>
 			<div class="footer-left">
 				<p class="footer-links">
-					<a class="link-1" href="#">Home</a> <a href="#">Blog</a> <a
-						href="#">About</a> <a href="#">Contact Us</a>
+					<a class="link-1" href="#">Home</a> <a href="Aboutus">About</a> <a href="contactus">Contact Us</a>
+
 				</p>
 			</div>
 			<div class="footer-right">
 
-				<a href="#"><img src="./resources/image/fb.png"></a> <a
-					href="#"><img src="./resources/image/is.png"></a> <a href="#"><img
-					src="./resources/image/GitHub_Logo.png"></a> <a href="#"><img
-					src="./resources/image/mail.png"></a>
+				<a href="https://www.instagram.com/kkeehhh"><img
+					src="./resources/image/is.png"></a> <a
+					href="https://www.instagram.com/go_soojin_"><img
+					src="./resources/image/is2.png"></a> <a
+					href="https://github.com/0seony"><img
+					src="./resources/image/GitHub_Logo.png"></a> <a
+					href="https://github.com/dudpray0220"><img
+					src="./resources/image/GitHub_Logo2.png"></a>
 
 			</div>
 			<div class="snsLogo">

@@ -261,17 +261,17 @@ to {
 }
 
 }
-.fun-btn {
+.fun-btn1 {
 	width: 500px;
 	min-height: 100px;
 	/* change bg color to get different hues    */
-	background: rgb(63, 94, 251);
-	background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%,
-		rgba(252, 70, 107, 1) 100%);
+	background: rgb(2, 0, 36);
+	background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%,
+		rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 	color: white;
 	padding: 0.4em 0.4em;
-	opacity: 0.8;
-	/* padding-top: 1em; */
+	/* 	opacity: 0.8; */
+	padding-top: 1em;
 	border: none;
 	transition: all .3s ease;
 	border-radius: 5px;
@@ -285,10 +285,47 @@ to {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 20px;
+	background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%,
+		rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 }
 
-.fun-btn:hover {
-	animation: random-bg .5s linear infinite, grow 1300ms ease infinite;
+.fun-btn2 {
+	width: 500px;
+	min-height: 100px;
+	/* change bg color to get different hues    */
+	background: rgb(34, 193, 195); background : linear-gradient( 0deg,
+	rgba( 34, 193, 195, 1) 0%, rgba( 253, 187, 45, 1) 100%);
+	color: white;
+	padding: 0.4em 0.4em;
+	/* 	opacity: 0.8; */
+	padding-top: 1em;
+	border: none;
+	transition: all .3s ease;
+	border-radius: 5px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	outline: none;
+	align-self: center;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 30px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%,
+		rgba(253, 187, 45, 1) 100%);
+}
+
+.fun-btn1:hover {
+	box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.25) inset, -200px 0 0 0
+		rgba(0, 0, 0, 0.25) inset;
+}
+
+.fun-btn2:hover {
+	box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.25) inset, -200px 0 0 0
+		rgba(0, 0, 0, 0.25) inset;
 }
 
 .start-fun {

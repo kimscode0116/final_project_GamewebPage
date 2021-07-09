@@ -37,7 +37,7 @@
 					<li><a href="boardList">TalktoTalk</a></li>
 				</span>
 				<span>
-					<li><a href="question">Q&A</a></li>
+					<li><a href="questionList">Q&A</a></li>
 				</span>
 			</ul>
 		</nav>
@@ -46,7 +46,7 @@
 				<a href="#"><i class="fas fa-bars"></i></a>
 			</button>
 			<div class="dropdown-content">
-				${userOradmin} <a href="createDB">DB생성</a>
+				${userOradmin} <!-- <a href="createDB">DB생성</a> -->
 			</div>
 		</div>
 	</header>
@@ -62,33 +62,47 @@
 				<section class="data_insert">
 					<form action="questionInsert_action" method="POST" class="totalForm">
 						<table width="100%">
-							<tr height="1" bgcolor="#dddddd">
-								<td colspan="8"></td>
+							<tbody>
+							<tr class="upper">
+								<th>글번호</th>
+								<td><span type="text" name="idx" value="${idx}" class="default"
+									readonly>${idx }</span></td>
+								
 							</tr>
-							<tr>
-								<td><input type="text" name="question_title" 
+							<tr class="upper">
+								<th>제목</th>
+								<td><span type="text" name="question_title"
 									value="${question_title}" class="default"
-									readonly></td>
-							</tr>
-						
+									readonly >${question_title}</span></td>
 
-							<tr>
-								<td><input type="text" name="user_id" value="${user_id}" class="default"
-									readonly></td>
+							</tr>
+							<tr class="upper">
+								<th>작성자</th>
+								<td><span type="text" name="user_id"
+									value="${user_id}" class="default"
+									readonly >${user_id}</span></td>
+							
+							</tr>
+							<tr class="upper">
+								<th>작성시간</th>
+								<td><span type="text" name="created" value="${created}" class="default"
+									readonly >${created}</span></td>
+							</tr>
+							<tr class="upper">
+								<th>내용</th>
+								<td><span type="text" name="question_content"
+									value="${question_content}" class="default"
+									readonly >${question_content}</span></td>
 							</tr>
 							
-							<tr>
-								<td id="bottom"><textarea name="question_content" cols="53" rows="100" value="${question_content}" class="default"
-									readonly></textarea></td>
+							<tr class="upper">
+								<th>답변</th>
+								<td><span type="text" name="question_content"
+									placeholder="답변을 입력하세요"></span></td>
 							</tr>
 							
-							<tr>
-								<td><input type="text" name="answer" placeholder="답변을 입력하세요"></td>
-							</tr>
+						</tbody>
 
-							<tr height="1" bgcolor="#dddddd">
-								<td colspan="4"></td>
-							</tr>
 
 						</table>
 					
@@ -105,16 +119,20 @@
 			</div>
 			<div class="footer-left">
 				<p class="footer-links">
-					<a class="link-1" href="#">Home</a> <a href="#">Blog</a> <a
-						href="#">About</a> <a href="#">Contact Us</a>
+					<a class="link-1" href="#">Home</a> <a href="Aboutus">About</a> <a href="contactus">Contact Us</a>
+
 				</p>
 			</div>
 			<div class="footer-right">
 
-				<a href="#"><img src="./resources/image/fb.png"></a> <a
-					href="#"><img src="./resources/image/is.png"></a> <a href="#"><img
-					src="./resources/image/GitHub_Logo.png"></a> <a href="#"><img
-					src="./resources/image/mail.png"></a>
+				<a href="https://www.instagram.com/kkeehhh"><img
+					src="./resources/image/is.png"></a> <a
+					href="https://www.instagram.com/go_soojin_"><img
+					src="./resources/image/is2.png"></a> <a
+					href="https://github.com/0seony"><img
+					src="./resources/image/GitHub_Logo.png"></a> <a
+					href="https://github.com/dudpray0220"><img
+					src="./resources/image/GitHub_Logo2.png"></a>
 
 			</div>
 			<div class="snsLogo">

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,29 +36,47 @@ public class HomeController {
 
 		if (is_login == null) {
 			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
-			model.addAttribute("gameCheck", "location.href='/oaiaGameLab/game_NoScore'");
+			model.addAttribute("gameCheck1", "location.href='/oaiaGameLab/game_NoScore'");
+			model.addAttribute("gameCheck2", "location.href='/oaiaGameLab/game_NoScore_space'");
 			return "main";
 		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
 			model.addAttribute("userOradmin",
 					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
-			model.addAttribute("gameCheck", "location.href='/oaiaGameLab/game_adminScore'");
+			model.addAttribute("gameCheck1", "location.href='/oaiaGameLab/game_adminScore'");
+			model.addAttribute("gameCheck2", "location.href='/oaiaGameLab/game_adminScore_space'");
+
 			model.addAttribute("m1", login_id + "님의 관리자모드");
 			return "main";
 		} else
 			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-		model.addAttribute("gameCheck", "location.href='/oaiaGameLab/game_userScore'");
+		model.addAttribute("gameCheck1", "location.href='/oaiaGameLab/game_userScore'");
+		model.addAttribute("gameCheck2", "location.href='/oaiaGameLab/game_userScore_space'");
+
 		return "main";
 	}
 
 	@RequestMapping(value = "/createDB", method = RequestMethod.GET)
-	public String createTable(Locale locale, Model model) {
+	public String createTable(HttpServletRequest request, Locale locale, Model model) {
 		AdminDB db = new AdminDB();
+		HttpSession session = request.getSession();
+
+		Boolean is_login = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
 		boolean isSuccess = db.createDB();
 		if (isSuccess) {
 			model.addAttribute("m1", "Complete");
 		} else {
 			model.addAttribute("m1", "Already exist");
 		}
+
+		if (is_login == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
 		return "message";
 	}
 
@@ -79,6 +98,7 @@ public class HomeController {
 				return "adminlogin";
 			} else {
 				model.addAttribute("m1", "DB ERROR");
+				model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
 				return "message";
 			}
 		} else { // db 있을 경우, adminlogin 창으로..
@@ -111,6 +131,9 @@ public class HomeController {
 
 		} else {
 			model.addAttribute("m1", "Login Error.");
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("messageBtn", "<a href='adminlogin' class='goGameBtn'>return Login</a>");
+
 			return "message";
 		}
 	}
@@ -139,9 +162,14 @@ public class HomeController {
 		String admin_pwd = (String) session.getAttribute("login_pwd");
 
 		if (inputadmin_pwd.equals(admin_pwd)) {
-			return "redirect:/admininfo";
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
 
+			return "redirect:/admininfo";
 		}
+		model.addAttribute("userOradmin",
+				"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+
 		return "admininfo_pwd";
 	}
 
@@ -158,7 +186,13 @@ public class HomeController {
 			model.addAttribute("admin_id", admin.admin_id);
 			model.addAttribute("admin_pwd", admin.admin_pwd);
 			model.addAttribute("admin_name", admin.admin_name);
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+
 		}
+		model.addAttribute("userOradmin",
+				"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+
 		return "admininfo";
 	}
 
@@ -182,8 +216,14 @@ public class HomeController {
 		Admin admin = new Admin(admin_id, ChangePwd, admin_name);
 		boolean isSuccess = db.updateAdmin(admin);
 		if (isSuccess) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			
 			return "redirect:/";
 		}
+		model.addAttribute("userOradmin",
+				"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+		
 		return "redirect:/admininfo";
 	}
 
@@ -222,6 +262,8 @@ public class HomeController {
 		UserDB db = new UserDB();
 		String resultString = db.signup(signupUser);
 		model.addAttribute("m1", resultString);
+		model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+
 		return "message";
 	}
 
@@ -251,11 +293,13 @@ public class HomeController {
 
 			return "redirect:/";
 		}
-		return "redirect:/login";
+		model.addAttribute("m1", "Login Error");
+		model.addAttribute("messageBtn", "<a href='login' class='goGameBtn'>return Login</a>");
+		model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+		return "message";
 	}
 
 	// 내정보 페이지
-
 	// 내정보 페이지 진입 하기전 비밀번호 대조 페이지
 	@RequestMapping(value = "/myinfo_pwd", method = RequestMethod.GET)
 	public String myinfoPwd(Locale locale, Model model) {
@@ -344,6 +388,40 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/";
 	}
+//
+//	// 자유게시판
+//	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
+//	public String selectData(HttpServletRequest request, Locale locale, Model model) {
+//		try {
+//			request.setCharacterEncoding("UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//		HttpSession session = request.getSession();
+//		Boolean is_login = (Boolean) session.getAttribute("is_login");
+//		String login_id = (String) session.getAttribute("login_id");
+//
+//		UserDB userdb = new UserDB();
+//		String htmlString1 = userdb.boardSelect();
+//		String htmlString2 = userdb.noticeSelect();
+//
+//		if (is_login == null) {
+//			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+//			model.addAttribute("boardList_admin", htmlString2);
+//			model.addAttribute("boardList_user", htmlString1);
+//			return "boardList";
+//		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+//			model.addAttribute("userOradmin",
+//					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+//			model.addAttribute("boardList_admin", htmlString2);
+//			model.addAttribute("boardList_user", htmlString1);
+//			return "boardList";
+//		} else
+//			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+//		model.addAttribute("boardList_admin", htmlString2);
+//		model.addAttribute("boardList_user", htmlString1);
+//		return "boardList";
+//	}
 
 	// 자유게시판
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
@@ -360,19 +438,66 @@ public class HomeController {
 		UserDB userdb = new UserDB();
 		String htmlString1 = userdb.boardSelect();
 		String htmlString2 = userdb.noticeSelect();
-		System.out.println(htmlString1);
-		System.out.println(htmlString2);
+
+		int totalContentsCount = userdb.boardPaging();
+
+		int pageCount = 1;
+		if (totalContentsCount > 10 && totalContentsCount % 10 > 0) {
+			pageCount += totalContentsCount / 10;
+		}
+		String pageTag = "";
+		for (int i = 1; i <= pageCount; i++) {
+			pageTag += "<a href='boardPagingList?pageIdx=" + i + "'>" + i + " " + "</a>";
+		}
+		model.addAttribute("pageCount", pageTag);
+
 		if (is_login == null) {
 			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
-			model.addAttribute("boardList_admin", htmlString2);
-			model.addAttribute("boardList_user", htmlString1);
-			return "boardList";
 		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
 			model.addAttribute("userOradmin",
 					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
-			model.addAttribute("boardList_admin", htmlString2);
-			model.addAttribute("boardList_user", htmlString1);
-			return "boardList";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("boardList_admin", htmlString2);
+		model.addAttribute("boardList_user", htmlString1);
+		return "boardList";
+	}
+
+	// 자유게시판 페이징 처리
+	@RequestMapping(value = "/boardPagingList", method = RequestMethod.GET)
+	public String selectBoardPageData(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("pageIdx") int pageIdx) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean is_login = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		UserDB userdb = new UserDB();
+
+		String htmlString1 = userdb.boardPageSelect(pageIdx);
+		String htmlString2 = userdb.noticeSelect();
+
+		int totalContentsCount = userdb.boardPaging();
+
+		int pageCount = 1;
+		if (totalContentsCount > 10 && totalContentsCount % 10 > 0) {
+			pageCount += totalContentsCount / 10;
+		}
+		String pageTag = "";
+		for (int i = 1; i <= pageCount; i++) {
+			pageTag += "<a href='boardPagingList?pageIdx=" + i + "'>" + i + " " + "</a>";
+		}
+		model.addAttribute("pageCount", pageTag);
+
+		if (is_login == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
 		} else
 			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
 		model.addAttribute("boardList_admin", htmlString2);
@@ -427,20 +552,19 @@ public class HomeController {
 
 		UserDB userdb = new UserDB();
 		SignupUser user = new SignupUser(login_id);
-		String user_nickname = "";
+		String user_idx = "";
 
 		if (isSuccess == null) {
-			user_nickname = "noname";
-			System.out.println("익명유저로 성공");
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			user_idx = "noname";
 		} else {
 			if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
 				model.addAttribute("userOradmin",
 						"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
-				user_nickname = "관리자";
-				System.out.println("관리자계정으로 작성 성공");
+				user_idx = "관리자";
 			} else {
-				user_nickname = userdb.nicknameSelect(user);
-				System.out.println("로그인 유저로 성공");
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+				user_idx = userdb.nicknameSelect(user);
 			}
 		}
 		String user_title = request.getParameter("user_title");
@@ -450,16 +574,13 @@ public class HomeController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String now = sdf.format(Calendar.getInstance().getTime());
 
-		Board board = new Board(user_title, user_nickname, user_content, now);
+		Board board = new Board(user_title, login_id, user_content, now);
 		boolean insertSuccess = userdb.boardInsert(board);
 
 		if (insertSuccess) {
-			System.out.println("게시물 작성 성공");
-			model.addAttribute("m1", "작성성공");
-			return "message";
+			return "redirect:/boardList";
 		} else
-			model.addAttribute("m1", "작성 실패");
-
+			model.addAttribute("m1", "게시글 작성에 실패하였습니다");
 		return "message";
 	}
 
@@ -475,6 +596,120 @@ public class HomeController {
 
 		HttpSession session = request.getSession();
 		UserDB userdb = new UserDB();
+		AdminDB admindb = new AdminDB();
+
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+		Board content = userdb.boardContentDatail(contentsIdx);
+		String commentsList = userdb.CommentsDatail(contentsIdx);
+		String CommentsNouserDetail = userdb.CommentsNouserDetail(contentsIdx);
+
+		if (isSuccess == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("commentsList", CommentsNouserDetail);
+		} else {
+			if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
+				model.addAttribute("userOradmin",
+						"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+				model.addAttribute("commentsList", commentsList);
+
+			} else { // 유저 로그인
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+				model.addAttribute("commentsList", CommentsNouserDetail);
+			}
+		}
+		model.addAttribute("idx", content.idx);
+		model.addAttribute("user_title", content.user_title);
+		model.addAttribute("user_id", content.user_id);
+		model.addAttribute("created", content.created);
+		model.addAttribute("user_content", content.user_content);
+		return "boarddetail";
+	}
+
+	@RequestMapping(value = "/boardComments_action", method = RequestMethod.POST)
+	public String boardCommentsAction(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		UserDB userdb = new UserDB();
+		SignupUser user = new SignupUser(login_id);
+		String user_id = "";
+
+		if (isSuccess == null) {
+			user_id = "noname";
+		} else {
+			if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
+				model.addAttribute("userOradmin",
+						"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+				user_id = "관리자";
+			} else {
+				user_id = login_id;
+			}
+		}
+		String board_idx = request.getParameter("idx");
+		String comments = request.getParameter("comments");
+
+		// 첫번째created 시간을 불러오는 메소드 추가
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String now = sdf.format(Calendar.getInstance().getTime());
+
+		Comments commentsAll = new Comments(user_id, comments, now, Integer.parseInt(board_idx));
+		boolean insertSuccess = userdb.commentInsert(commentsAll);
+
+		if (insertSuccess) {
+			return "redirect:/boarddetail?idx=" + board_idx;
+		} else
+			model.addAttribute("m1", "작성 실패");
+		return "message";
+	}
+
+	// 댓글 삭제
+	@RequestMapping(value = "/deleteComments", method = RequestMethod.GET)
+	public String deleteComments(HttpServletRequest request, Locale locale, Model model, @RequestParam("idx") int idx,
+			@RequestParam("board_idx") int board_idx) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
+		AdminDB gamedb = new AdminDB();
+
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		model.addAttribute("userOradmin",
+				"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+		boolean deleteCheck = userdb.commentsDelete(idx);
+		if (deleteCheck) {
+			return "redirect:/boarddetail?idx=" + board_idx;
+		} else
+			model.addAttribute("m1", "삭제 오류");
+		return "message";
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public String u(HttpServletRequest request, Locale locale, Model model, @RequestParam("idx") int contentsIdx,
+			@RequestParam("user_id") String user_id) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(contentsIdx);
+		System.out.println(user_id);
+
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
 		AdminDB gamedb = new AdminDB();
 
 		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
@@ -483,22 +718,477 @@ public class HomeController {
 
 		if (isSuccess == null) {
 			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("m1", "로그인이 필요합니다");
+			System.out.println("오류1");
+
+			return "message";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
+			System.out.println("오류2");
+
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			model.addAttribute("m1", "관리자의 경우 게시물 강제삭제만 가능합니다.");
+			return "message";
+		} else // 유저 로그인
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		if (user_id.equals("'noname'") || user_id.equals("'관리자'")) {
+			System.out.println("오류3");
+
+			model.addAttribute("m1", "해당 글은 수정 및 삭제가 불가능합니다.");
+			return "message";
+		} else {
+			System.out.println("오류4");
+
+			session.setAttribute("contentsIdx", contentsIdx);
+			session.setAttribute("contents_user_id", user_id);
+			return "boardupdate_pwd_cnfm";
+		}
+	}
+
+	@RequestMapping(value = "/update_confirm_action", method = RequestMethod.GET)
+	public String updatePwdConfirm(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		UserDB db = new UserDB();
+
+		String user_pwd = request.getParameter("pwd_confirm");
+		user_pwd = db.sha256(user_pwd);
+
+		String originpwd = (String) session.getAttribute("login_pwd");
+		originpwd = db.sha256(originpwd);
+
+		String contents_user_id = (String) session.getAttribute("contents_user_id");
+		String login_id = (String) session.getAttribute("login_id");
+
+		if (user_pwd.equals(originpwd) && contents_user_id.equals(login_id)) {
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+			int contentsIdx = (Integer) session.getAttribute("contentsIdx");
+
+			Board board = db.boardContentDatail(contentsIdx);
+			model.addAttribute("idx", board.idx);
+			model.addAttribute("user_title", board.user_title);
+			model.addAttribute("user_id", board.user_id);
+			model.addAttribute("user_content", board.user_content);
+			return "boardupdate";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("m1", "해당게시물 수정 및 삭제 권한이 없습니다");
+		model.addAttribute("messageBtn", "<a href='boardList' class='goGameBtn'>retun boardList</a>");
+		return "message";
+	}
+
+	@RequestMapping(value = "/boardupdate_action", method = RequestMethod.POST)
+	public String boardupdateAction(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("idx") int contentIdx, @RequestParam("user_title") String user_title,
+			@RequestParam("user_id") String user_id, @RequestParam("user_content") String user_content) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		UserDB userdb = new UserDB();
+		SignupUser user = new SignupUser(login_id);
+
+		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		Board board = new Board(user_title, user_id, user_content, contentIdx);
+		boolean updateSuccess = userdb.boardUpdate(board);
+
+		if (updateSuccess) {
+			model.addAttribute("m1", "update 성공");
+			return "message";
+		} else
+			model.addAttribute("m1", "update 실패");
+		return "message";
+	}
+
+	// 게시물 삭제
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String deletecontents(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("idx") int contentsIdx, @RequestParam("user_id") String user_id) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
+		AdminDB gamedb = new AdminDB();
+
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		if (isSuccess == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("m1", "로그인이 필요합니다");
+			return "message";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			boolean deleteCheck = userdb.boardDelete(contentsIdx);
+			model.addAttribute("m1", "관리자 권한으로 삭제 완료");
+			return "message";
+		} else { // 유저 로그인
+			if (user_id.equals("noname") || user_id.equals("'관리자'")) {
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+				model.addAttribute("m1", "해당게시물 삭제 불가");
+				return "message";
+			} else
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+			session.setAttribute("contents_idx", contentsIdx);
+			session.setAttribute("contents_user_id", user_id);
+			return "content_pwd_confirm";
+		}
+	}
+
+	@RequestMapping(value = "/content_confirm_action", method = RequestMethod.GET)
+	public String contentPwdConfirm(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		UserDB db = new UserDB();
+		String user_pwd = request.getParameter("pwd_confirm");
+//		user_pwd = db.sha256(user_pwd);
+		HttpSession session = request.getSession();
+		String originpwd = (String) session.getAttribute("login_pwd");
+		int contentsIdx = (Integer) session.getAttribute("contents_idx");
+		String contents_user_id = (String) session.getAttribute("contents_user_id");
+		String login_id = (String) session.getAttribute("login_id");
+
+		if (user_pwd.equals(originpwd) && contents_user_id.equals(login_id)) {
+			boolean isSuccess = db.boardDelete(contentsIdx);
+
+			if (!isSuccess) {
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+				model.addAttribute("m1", "게시물 삭제에 실패했습니다");
+				return "message";
+			} else
+				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+			model.addAttribute("m1", "삭제성공");
+			return "message";
+		}
+		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("m1", "게시물 삭제 권한이 없습니다");
+		return "message";
+	}
+
+	// Q&A 리스트 조회
+	@RequestMapping(value = "/questionList", method = RequestMethod.GET)
+	public String userquestionList(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		UserDB userdb = new UserDB();
+		AdminDB admindb = new AdminDB();
+		SignupUser user = new SignupUser(login_id);
+		String user_id = "";
+
+		String htmlString1 = userdb.userquestionList(user);
+		String htmlString2 = admindb.selectQuestion();
+
+		if (isSuccess == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("m1", "로그인 후 이용해주세요.");
+			return "message";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			model.addAttribute("onlyUser", "<a href='answerYes'>답변완료</a><a href='answerNo'>답변미완료</a>");
+			model.addAttribute("question_admin", htmlString2);
+			return "questionList";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("onlyUser", "<a href=\"questionInsert\">글쓰기</a>\n");
+		model.addAttribute("question_user", htmlString1);
+		return "questionList";
+	}
+
+	// Q&A 리스트 조회 - 답변 완료
+	@RequestMapping(value = "/answerYes", method = RequestMethod.GET)
+	public String answeryes(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		UserDB userdb = new UserDB();
+		AdminDB admindb = new AdminDB();
+		SignupUser user = new SignupUser(login_id);
+		String user_id = "";
+
+		String htmlString1 = userdb.userquestionList(user);
+		String htmlString2 = admindb.answerYes();
+
+		if (isSuccess == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("m1", "로그인 후 이용해주세요.");
+			return "message";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			model.addAttribute("onlyUser",
+					"<a href='questionList'>질문리스트</a><a href='answerYes'>답변완료</a><a href='answerNo'>답변미완료</a>");
+			model.addAttribute("question_admin", htmlString2);
+			return "questionList";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("onlyUser", "<a href=\"questionInsert\">글쓰기</a>\n");
+		model.addAttribute("question_user", htmlString1);
+		return "questionList";
+	}
+
+	// Q&A 리스트 조회_ 답변 미완료
+	@RequestMapping(value = "/answerNo", method = RequestMethod.GET)
+	public String answerno(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		UserDB userdb = new UserDB();
+		AdminDB admindb = new AdminDB();
+		SignupUser user = new SignupUser(login_id);
+		String user_id = "";
+
+		String htmlString1 = userdb.userquestionList(user);
+		String htmlString2 = admindb.answerNo();
+
+		if (isSuccess == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			model.addAttribute("m1", "로그인 후 이용해주세요.");
+			return "message";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			model.addAttribute("onlyUser",
+					"<a href='questionList'>질문리스트</a><a href='answerYes'>답변완료</a><a href='answerNo'>답변미완료</a>");
+			model.addAttribute("question_admin", htmlString2);
+			return "questionList";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("onlyUser", "<a href=\"questionInsert\">글쓰기</a>\n");
+		model.addAttribute("question_user", htmlString1);
+		return "questionList";
+	}
+
+	// 로그인 유저 Q&A 작성
+	@RequestMapping(value = "/questionInsert", method = RequestMethod.GET)
+	public String userquestionInsert(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+		UserDB userdb = new UserDB();
+
+		if (isSuccess) {
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+			model.addAttribute("user_id", login_id);
+			model.addAttribute("answer", "관리자가 곧 답변할 예정입니다. 잠시 기다려주세요.");
+
+			return "questionInsert";
+		}
+		return "questionInsert";
+	}
+
+	@RequestMapping(value = "/questionInsert_action", method = RequestMethod.POST)
+	public String questioninsertAction(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		SignupUser user = new SignupUser(login_id);
+		String question_title = request.getParameter("question_title");
+		String question_content = request.getParameter("question_content");
+
+		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		model.addAttribute("user_id", login_id);
+
+		// 첫번째created 시간을 불러오는 메소드 추가
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String now = sdf.format(Calendar.getInstance().getTime());
+		Question question = new Question(question_title, login_id, question_content, now);
+		boolean insertSuccess = userdb.questionInsert(question);
+		if (insertSuccess) {
+			model.addAttribute("m1", "작성성공");
+			return "message";
+		} else
+			model.addAttribute("m1", "작성 실패");
+
+		return "message";
+	}
+
+	// 로그인 유저 - Q&A 목록에서 하나 클릭시 게시물 조회 페이지로 이동
+	@RequestMapping(value = "/userquestiondetail", method = RequestMethod.GET)
+	public String userquestionDetail(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("idx") int contentsIdx) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
+		AdminDB admindb = new AdminDB();
+
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+		Question content = userdb.userquestionDetail(contentsIdx);
+
+		if (isSuccess == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
 		} else {
 			if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
 				model.addAttribute("userOradmin",
 						"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+				model.addAttribute("adminOnly", "<a href='questionupdate?idx=" + contentsIdx + "'>답변하기</a>");
 			} else { // 유저 로그인
 				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+				model.addAttribute("adminOnly",
+						"<a href='questiondelete?user_id=" + login_id + "&idx=" + contentsIdx + "'>삭제하기</a>");
 			}
 		}
 		model.addAttribute("idx", content.idx);
-		model.addAttribute("user_title", content.user_title);
-		model.addAttribute("user_nickname", content.user_nickname);
+		model.addAttribute("question_title", content.question_title);
+		model.addAttribute("user_id", content.user_id);
 		model.addAttribute("created", content.created);
-		model.addAttribute("user_content", content.user_content);
-		return "boarddetail";
+		model.addAttribute("question_content", content.question_content);
+		model.addAttribute("answer", content.answer);
+		return "questionDetail";
 	}
 
+	// Q&A 답변하기
+	@RequestMapping(value = "/questionupdate", method = RequestMethod.GET)
+	public String questionupdate(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("idx") int contentsIdx) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
+
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+		Question question = userdb.userquestionDetail(contentsIdx);
+		model.addAttribute("userOradmin",
+				"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+
+		model.addAttribute("idx", question.idx);
+		model.addAttribute("question_title", question.question_title);
+		model.addAttribute("user_id", question.user_id);
+		model.addAttribute("question_content", question.question_content);
+		model.addAttribute("created", question.created);
+		model.addAttribute("answer", question.answer);
+		return "questionUpdate";
+	}
+
+	@RequestMapping(value = "/questionupdate_action", method = RequestMethod.POST)
+	public String questionupdateAction(HttpServletRequest request, Locale locale, Model model) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		AdminDB admindb = new AdminDB();
+		UserDB userdb = new UserDB();
+
+		String intIdx = request.getParameter("idx");
+		int idx = Integer.parseInt(intIdx);
+		String question_title = request.getParameter("question_title");
+		String user_id = request.getParameter("user_id");
+		String question_content = request.getParameter("question_content");
+		String answer = request.getParameter("answer");
+
+		Question question = new Question(question_title, user_id, question_content, answer, idx);
+		boolean updateSuccess = admindb.questionUpdate(question);
+
+		if (updateSuccess) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+
+//			model.addAttribute("m1", "update 성공");
+//			return "questionUpdate?idx="+idx;
+			return "redirect:/questionList";
+		} else {
+			model.addAttribute("m1", "update 실패");
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			return "message";
+		}
+	}
+
+	// 로그인 유저 - Q&A 삭제
+	@RequestMapping(value = "/questiondelete", method = RequestMethod.GET)
+	public String deletequestion(HttpServletRequest request, Locale locale, Model model,
+			@RequestParam("idx") int contentsIdx, @RequestParam("user_id") String user_id) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		HttpSession session = request.getSession();
+		UserDB userdb = new UserDB();
+		AdminDB admindb = new AdminDB();
+
+		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		boolean deletesuccess = userdb.questionDelete(contentsIdx);
+		if (deletesuccess) {
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+			model.addAttribute("m1", "삭제 완료");
+
+		} else
+			model.addAttribute("m1", "삭제실패");
+		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+
+		return "message";
+	}
+
+	// 게임실행
 	// 랭킹 페이지
 	@RequestMapping(value = "/ranking", method = RequestMethod.GET)
 	public String ranking(HttpServletRequest request, Locale locale, Model model) {
@@ -530,218 +1220,7 @@ public class HomeController {
 		return "ranking";
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String u(HttpServletRequest request, Locale locale, Model model, @RequestParam("idx") int contentsIdx) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		HttpSession session = request.getSession();
-		UserDB userdb = new UserDB();
-		AdminDB gamedb = new AdminDB();
-
-		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
-		String login_id = (String) session.getAttribute("login_id");
-		Board content = userdb.boardContentDatail(contentsIdx);
-
-		if (isSuccess == null) {
-			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
-			model.addAttribute("m1", "로그인이 필요합니다");
-			return "message";
-		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
-			model.addAttribute("userOradmin",
-					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
-			model.addAttribute("m1", "관리자의 경우 게시물 강제삭제만 가능합니다.");
-			return "message";
-		} else // 유저 로그인
-			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-		model.addAttribute("idx", content.idx);
-		model.addAttribute("user_title", content.user_title);
-		model.addAttribute("user_nickname", content.user_nickname);
-		model.addAttribute("user_content", content.user_content);
-		return "boardupdate";
-	}
-
-	@RequestMapping(value = "/boardupdate_action", method = RequestMethod.POST)
-	public String boardupdateAction(HttpServletRequest request, Locale locale, Model model) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		HttpSession session = request.getSession();
-		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
-		String login_id = (String) session.getAttribute("login_id");
-
-		UserDB userdb = new UserDB();
-		SignupUser user = new SignupUser(login_id);
-
-		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-
-		String intIdx = request.getParameter("idx");
-		int idx = Integer.parseInt(intIdx);
-		String user_title = request.getParameter("user_title");
-		String user_nickname = request.getParameter("user_title");
-		String user_content = request.getParameter("user_content");
-
-		Board board = new Board(user_title, user_nickname, user_content, idx);
-		boolean updateSuccess = userdb.boardUpdate(board);
-
-		if (updateSuccess) {
-			model.addAttribute("m1", "update 성공");
-			return "message";
-		} else
-			model.addAttribute("m1", "update 실패");
-		return "message";
-	}
-
-	// 게시물 삭제
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deletecontents(HttpServletRequest request, Locale locale, Model model,
-			@RequestParam("idx") int contentsIdx, @RequestParam("user_nickname") String user_nickname) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		HttpSession session = request.getSession();
-		UserDB userdb = new UserDB();
-		AdminDB gamedb = new AdminDB();
-
-		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
-		String login_id = (String) session.getAttribute("login_id");
-
-		if (isSuccess == null) {
-			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
-			model.addAttribute("m1", "로그인이 필요합니다");
-			return "message";
-		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
-			model.addAttribute("userOradmin",
-					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
-			boolean deleteCheck = userdb.boardDelete(contentsIdx);
-			model.addAttribute("m1", "관리자 권한으로 삭제 완료");
-			return "message";
-		} else { // 유저 로그인
-			if (user_nickname.equals("noname")) {
-				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-
-				model.addAttribute("m1", "익명 게시물 삭제 불가");
-				return "message";
-			} else
-				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-
-			session.setAttribute("contents_idx", contentsIdx);
-			return "content_pwd_confirm";
-		}
-	}
-
-	@RequestMapping(value = "/content_confirm_action", method = RequestMethod.GET)
-	public String contentPwdConfirm(HttpServletRequest request, Locale locale, Model model) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		UserDB db = new UserDB();
-		String user_pwd = request.getParameter("pwd_confirm");
-//		user_pwd = db.sha256(user_pwd);
-		HttpSession session = request.getSession();
-		String originpwd = (String) session.getAttribute("login_pwd");
-		int contentsIdx = (Integer) session.getAttribute("contents_idx");
-
-		if (user_pwd.equals(originpwd)) {
-			boolean isSuccess = db.boardDelete(contentsIdx);
-
-			if (!isSuccess) {
-				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-
-				model.addAttribute("m1", "실패");
-				return "message";
-			} else
-				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-
-			model.addAttribute("m1", "삭제성공");
-			return "message";
-		}
-		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-
-		model.addAttribute("m1", "비밀번호 불일치");
-		return "message";
-	}
-
-	// Q&A 페이지
-	// 로그인 유저 Q&A 작성
-	@RequestMapping(value = "/question", method = RequestMethod.GET)
-	public String questionInsert(HttpServletRequest request, Locale locale, Model model) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		HttpSession session = request.getSession();
-		UserDB userdb = new UserDB();
-
-		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
-		String login_id = (String) session.getAttribute("login_id");
-
-		if (isSuccess == null) {
-			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
-			model.addAttribute("m1", "로그인 후 작성해주세요.");
-			return "message";
-		} else {
-			if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) { // 관리자 로그인
-				model.addAttribute("userOradmin",
-						"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
-				return "questionList";
-			} else { // 유저 로그인
-				model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-				model.addAttribute("user_id", login_id);
-				return "questionInsert";
-			}
-		}
-	}
-
-	@RequestMapping(value = "/questionInsert_action", method = RequestMethod.POST)
-	public String questioninsertAction(HttpServletRequest request, Locale locale, Model model) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		HttpSession session = request.getSession();
-		UserDB userdb = new UserDB();
-		Boolean isSuccess = (Boolean) session.getAttribute("is_login");
-		String login_id = (String) session.getAttribute("login_id");
-
-		SignupUser user = new SignupUser(login_id);
-		String question_title = request.getParameter("question_title");
-		String question_content = request.getParameter("question_content");
-
-		model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
-		model.addAttribute("user_id", login_id);
-		System.out.println("로그인 유저로 질문 성공");
-
-		// 첫번째created 시간을 불러오는 메소드 추가
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String now = sdf.format(Calendar.getInstance().getTime());
-		Question question = new Question(question_title, login_id, question_content, now);
-		boolean insertSuccess = userdb.questionInsert(question);
-		if (insertSuccess) {
-			System.out.println("질문 작성 성공");
-			model.addAttribute("m1", "작성성공");
-			return "message";
-		} else
-			model.addAttribute("m1", "작성 실패");
-
-		return "message";
-	}
-
-	// 게임실행
-	// 비회원용 게임 (score 저장 X)
+	// 비회원용 게임-earth ver (score 저장 X)
 	@RequestMapping(value = "/game_NoScore", method = RequestMethod.GET)
 	public String game_NoScore(Locale locale, Model model) {
 		try {
@@ -763,7 +1242,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	// 관리자 게임실행 (score 저장됨)
+	// 관리자 게임실행-earth ver  (score 저장됨)
 	@RequestMapping(value = "/game_adminScore", method = RequestMethod.GET)
 	public String admin_game(HttpServletRequest request, Locale locale, Model model) {
 		HttpSession session = request.getSession();
@@ -789,7 +1268,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	// 유저 게임실행 (score 저장됨)
+	// 유저 게임실행-earth ver  (score 저장됨)
 	@RequestMapping(value = "/game_userScore", method = RequestMethod.GET)
 	public String user_game(HttpServletRequest request, Locale locale, Model model) {
 		HttpSession session = request.getSession();
@@ -815,4 +1294,116 @@ public class HomeController {
 		return "redirect:/";
 	}
 
+	// 비회원용 게임-space ver (score 저장 X)
+		@RequestMapping(value = "/game_NoScore_space", method = RequestMethod.GET)
+		public String game_NoScore_space(Locale locale, Model model) {
+			try {
+				String line;
+				InputStream is;
+				is = Runtime.getRuntime()
+						.exec("python C:\\Users\\SMART-14\\Desktop\\team7Project\\MyFirstProjectGame/OaiaNoScoreSpace.py")
+						.getInputStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, "MS949"));
+				while ((line = br.readLine()) != null) {
+					System.out.println(line);
+				}
+				br.close();
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return "redirect:/";
+		}
+
+		// 관리자 게임실행-space ver  (score 저장됨)
+		@RequestMapping(value = "/game_adminScore_space", method = RequestMethod.GET)
+		public String admin_game_space(HttpServletRequest request, Locale locale, Model model) {
+			HttpSession session = request.getSession();
+			String adminId = (String) session.getAttribute("login_id");
+			AdminDB db = new AdminDB();
+			String isSuccess = db.adminScore(adminId);
+			try {
+				String line;
+				InputStream is;
+				is = Runtime.getRuntime()
+						.exec("python C:\\Users\\SMART-14\\Desktop\\team7Project\\MyFirstProjectGame/OaiaSpace.py " + isSuccess)
+						.getInputStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, "MS949"));
+				while ((line = br.readLine()) != null) {
+					System.out.println(line);
+				}
+				br.close();
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return "redirect:/";
+		}
+
+		// 유저 게임실행-space ver  (score 저장됨)
+		@RequestMapping(value = "/game_userScore_space", method = RequestMethod.GET)
+		public String user_game_space(HttpServletRequest request, Locale locale, Model model) {
+			HttpSession session = request.getSession();
+			String userId = (String) session.getAttribute("login_id");
+			UserDB db = new UserDB();
+			String isSuccess = db.userScore(userId);
+			try {
+				String line;
+				InputStream is;
+				is = Runtime.getRuntime()
+						.exec("python C:\\Users\\SMART-14\\Desktop\\team7Project\\MyFirstProjectGame/OaiaSpace.py " + isSuccess)
+						.getInputStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, "MS949"));
+				while ((line = br.readLine()) != null) {
+					System.out.println(line);
+				}
+				br.close();
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return "redirect:/";
+		}
+	// contactus부분
+	@RequestMapping(value = "/contactus", method = RequestMethod.GET)
+	public String contactus(HttpServletRequest request, Locale locale, Model model) {
+		HttpSession session = request.getSession();
+
+		Boolean is_login = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		if (is_login == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			return "contactus";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			return "contactus";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		return "contactus";
+	}
+
+	// contactus부분
+	@RequestMapping(value = "/Aboutus", method = RequestMethod.GET)
+	public String Aboutus(HttpServletRequest request, Locale locale, Model model) {
+		HttpSession session = request.getSession();
+
+		Boolean is_login = (Boolean) session.getAttribute("is_login");
+		String login_id = (String) session.getAttribute("login_id");
+
+		if (is_login == null) {
+			model.addAttribute("userOradmin", "<a href=\"login\">로그인</a> <a href=\"signup\">회원가입</a>");
+			return "Aboutus";
+		} else if (login_id.length() == 9 && login_id.split("_")[0].equals("admin")) {
+			model.addAttribute("userOradmin",
+					"<a href=\"logout\">관리자 로그아웃</a>  <a href=\"admininfo_pwd\">관리자 정보 수정</a> <a href=\"userList\">회원목록 조회</a>");
+			return "Aboutus";
+		} else
+			model.addAttribute("userOradmin", "<a href=\"logout\">로그아웃</a><a href=\"myinfo_pwd\">개인정보수정</a>\n");
+		return "Aboutus";
+	}
 }
